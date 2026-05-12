@@ -3,11 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
     <title>HOTELARIA</title>
 
 </head>
 <body>
     
+    <h1>Home</h1>
+<p>
+  Gerencie hóspedes, quartos e reservas do hotel.
+</p>
+
+{% for hospedes in hospedes %}
+
+
+<hr>
+
+<div class="dashboard-grid">
+
+  <div class="stat-card">
+    <h2> {{ total_hospedes }}</h2>
+    <p>Hóspedes</p>
+  </div>
+
+  <div class="stat-card">
+    <h2> {{ total_quartos }}</h2>
+    <p>Quartos</p>
+  </div>
+
+  <div class="stat-card">
+    <h2> {{ total_reservas_ativas }}</h2>
+    <p>Reservas Ativas</p>
+  </div>
+
+</div>
+
+<hr>
+
+<div class="acoes">
+
+  <a href="/hospedes" class="btn">
+    Hóspedes
+  </a>
+
+  <a href="/quartos" class="btn">
+    Quartos
+  </a>
+
+  <a href="/reservas" class="btn">
+    Reservas
+  </a>
+
+  <a href="/add_reserva" class="btn">
+    Nova Reserva
+  </a>
+
+</div>
+
+{% endblock %}
+
 </body>
 </html>
