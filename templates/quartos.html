@@ -10,7 +10,67 @@
 </head>
 
 <body>
-    
+
+{% block content %}
+
+<h2>Quartos</h2>
+
+<a href="/add_quarto" class="btn">
+  Novo Quarto
+</a>
+
+<br><br>
+
+{% if quartos %}
+
+<table>
+
+  <tr>
+    <th>Número</th>
+    <th>Tipo</th>
+    <th>Diária</th>
+    <th>Status</th>
+    <th>Ações</th>
+  </tr>
+
+  {% for q in quartos %}
+  <tr>
+
+    <td>{{ q.numero }}</td>
+    <td>{{ q.tipo }}</td>
+    <td>R$ {{ q.valor_diaria }}</td>
+    <td>{{ q.status }}</td>
+
+    <td>
+
+      <a href="/edit_quarto/{{ q.id }}" class="btn">
+        Editar
+      </a>
+
+      <a href="/delete_quarto/{{ q.id }}" class="btn"
+      onclick="return confirm('Deseja excluir?')">
+        Excluir
+      </a>
+
+    </td>
+
+  </tr>
+  {% endfor %}
+
+</table>
+
+{% else %}
+
+<p>Nenhum quarto cadastrado.</p>
+
+<a href="/add_quarto" class="btn">
+  Cadastrar Quarto
+</a>
+
+{% endif %}
+
+{% endblock %}
+
 </body>
 
 </html>

@@ -1,13 +1,72 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/style.css">
-    <title>HOTELARIA - RESERVAS</title>
 
+    <title>HOTELARIA - RESERVAS</title>
 </head>
+
 <body>
-    
+
+    <h2>Reservas</h2>
+
+    <table border="1" cellpadding="10">
+
+        <tr>
+            <th>Nome do Hóspede</th>
+            <th>Número do Quarto</th>
+            <th>Data de Entrada</th>
+            <th>Data de Saída</th>
+            <th>Ações</th>
+        </tr>
+
+        {% for r in reservas %}
+        <tr>
+
+            <td>{{ r.hospede_nome }}</td>
+
+            <td>{{ r.quarto_numero }}</td>
+
+            <td>
+                {{ r.data_entrada.strftime('%d/%m/%Y') }}
+            </td>
+
+            <td>
+                {{ r.data_saida.strftime('%d/%m/%Y') }}
+            </td>
+
+            <td>
+
+                <a href="/reserva/{{ r.id }}" class="btn">
+                    Visualizar
+                </a>
+
+                <a href="/edit_reserva/{{ r.id }}" class="btn">
+                    Editar
+                </a>
+
+                <a href="/delete_reserva/{{ r.id }}"
+                   class="btn"
+                   onclick="return confirm('Deseja excluir?')">
+
+                    Excluir
+                </a>
+
+            </td>
+
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <a href="/add_reserva" class="btn">
+        Nova Reserva
+    </a>
+
 </body>
 </html>

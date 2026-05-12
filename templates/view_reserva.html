@@ -9,5 +9,79 @@
 </head>
 <body>
     
+
+{% for reserva in reservas %}
+
+<h2>Reserva #{{ reserva.id }}</h2>
+
+
+<div class="detail-card">
+
+    <h3>Hóspede</h3>
+
+    <p><strong>Nome:</strong> {{ reserva.hospede_nome }}</p>
+
+    <p><strong>CPF:</strong> {{ reserva.hospede_cpf }}</p>
+
+    <p><strong>Telefone:</strong> {{ reserva.hospede_telefone }}</p>
+
+    <p><strong>Email:</strong> {{ reserva.hospede_email }}</p>
+
+</div>
+
+<br>
+
+<div class="detail-card">
+
+    <h3>Quarto</h3>
+
+    <p><strong>Número:</strong> {{ reserva.quarto_numero }}</p>
+
+    <p><strong>Tipo:</strong> {{ reserva.quarto_tipo }}</p>
+
+    <p><strong>Diária:</strong> R$ {{ reserva.valor_diaria }}</p>
+
+    <p><strong>Status:</strong> {{ reserva.quarto_status }}</p>
+
+</div>
+
+<br>
+
+<div class="detail-card">
+
+    <h3>Período</h3>
+
+    <p>
+        <strong>Check-in:</strong>
+        {{ reserva.data_entrada.strftime('%d/%m/%Y') }}
+    </p>
+
+    <p>
+        <strong>Check-out:</strong>
+        {{ reserva.data_saida.strftime('%d/%m/%Y') }}
+    </p>
+
+    <p>
+        <strong>Dias:</strong>
+        {{ dias }}
+    </p>
+
+</div>
+
+<br>
+
+<div class="detail-card">
+
+    <h3>Valor Total</h3>
+
+    <p>
+        R$ {{ valor_total }}
+    </p>
+
+</div>
+
+{% endfor %}
+
+
 </body>
 </html>
