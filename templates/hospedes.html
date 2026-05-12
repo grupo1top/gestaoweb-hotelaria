@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>HOTELARIA - HÓSPEDES</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="hospedes.html">HOSPEDES</a>
+        <a href="quartos.html">QUARTOS</a>
+        <a href="reservas.html">RESERVAS</a>
+    </div>
+    <main class="hospedes">
+        <header class="hospedes__header">
+            <div>
+                <h1 class="hospedes__title">Lista de hóspedes</h1>
+                <p class="hospedes__subtitle">Visualize os dados e use as ações para editar ou excluir.</p>
+            </div>
+            <div class="hospedes__toolbar">
+                <a class="hospedes__button hospedes__button--primary" href="/add_hospede">Adicionar novo hóspede</a>
+                <a class="hospedes__button" href="index.html">Home</a>
+            </div>
+        </header>
+
+        <section class="hospedes__table-wrapper">
+            <table class="hospedes__table">
+                <thead class="hospedes__head">
+                    <tr class="hospedes__row">
+                        <th class="hospedes__head-cell">Nome</th>
+                        <th class="hospedes__head-cell">CPF</th>
+                        <th class="hospedes__head-cell">Telefone</th>
+                        <th class="hospedes__head-cell">Email</th>
+                        <th class="hospedes__head-cell">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="hospedes__body">
+                    {% if context is defined and context.items is defined %}
+                        {% for hospede_id, hospede in context.items() %}
+                            {% if hospede is mapping %}
+                                {% set hospede_item = hospede %}
+                            {% else %}
+                                {% set hospede_item = {'nome': hospede, 'cpf': '—', 'telefone': '—', 'email': '—'} %}
+                            {% endif %}
+                            <tr class="hospedes__row">
+                                <td class="hospedes__cell">{{ hospede_item.nome }}</td>
+                                <td class="hospedes__cell">{{ hospede_item.cpf or '—' }}</td>
+                                <td class="hospedes__cell">{{ hospede_item.telefone or '—' }}</td>
+                                <td class="hospedes__cell">{{ hospede_item.email or '—' }}</td>
+                                <td class="hospedes__cell">
+                                    <div class="hospedes__actions">
+                                        <a class="hospedes__action hospedes__action--edit" href="/edit_hospede/{{ hospede_id }}">Editar</a>
+                                        <a class="hospedes__action hospedes__action--delete" href="/delete_hospede/{{ hospede_id }}">Excluir</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% elif context is defined %}
+                        {% for hospede in context %}
+                            {% if hospede is mapping %}
+                                {% set hospede_item = hospede %}
+                            {% else %}
+                                {% set hospede_item = {'nome': hospede, 'cpf': '—', 'telefone': '—', 'email': '—'} %}
+                            {% endif %}
+                            <tr class="hospedes__row">
+                                <td class="hospedes__cell">{{ hospede_item.nome }}</td>
+                                <td class="hospedes__cell">{{ hospede_item.cpf or '—' }}</td>
+                                <td class="hospedes__cell">{{ hospede_item.telefone or '—' }}</td>
+                                <td class="hospedes__cell">{{ hospede_item.email or '—' }}</td>
+                                <td class="hospedes__cell">
+                                    <div class="hospedes__actions">
+                                        <a class="hospedes__action hospedes__action--edit" href="/edit_hospede/{{ hospede_item.id or '' }}">Editar</a>
+                                        <a class="hospedes__action hospedes__action--delete" href="/delete_hospede/{{ hospede_item.id or '' }}">Excluir</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr class="hospedes__row">
+                            <td class="hospedes__cell hospedes__no-data" colspan="5">Nenhum hóspede encontrado.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+
+</html>
