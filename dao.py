@@ -7,4 +7,4 @@ def connection():
           user="root",
           password="",
           database="hotelaria"
-     )
+     )  

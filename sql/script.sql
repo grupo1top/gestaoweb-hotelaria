@@ -44,5 +44,10 @@ INSERT INTO quartos( numero , tipo, valor_diaria, status)
 VALUES ('107', "PADRÃO", 1200.00 , 'DISPONÍVEL' );
 
 INSERT INTO reservas (hospede_id, quarto_id, data_entrada, data_saida)
-VALUES (1,1,'12-12-2012','16-12-2012');
+VALUES (1, 1, '2012-12-12', '2012-12-16');
 
+-- select para testar os insert into e ver se está de acordo --
+
+SELECT * FROM hospedes;
+SELECT * FROM quartos;
+SELECT * FROM reservas;
