@@ -35,10 +35,9 @@ CREATE TABLE reservas (
     
 );
 
--- insert para testar as tabelas e ver se está de acordo -- 
-
 INSERT INTO hospedes (nome, email, telefone, cpf) 
 VALUES ('Kurachi' , 'kurachi@email.com', '11961865757', '51242090966');
+
 
 INSERT INTO quartos( numero , tipo, valor_diaria, status)
 VALUES ('107', "PADRÃO", 1200.00 , 'DISPONÍVEL' );
@@ -46,8 +45,21 @@ VALUES ('107', "PADRÃO", 1200.00 , 'DISPONÍVEL' );
 INSERT INTO reservas (hospede_id, quarto_id, data_entrada, data_saida)
 VALUES (1, 1, '2012-12-12', '2012-12-16');
 
--- select para testar os insert into e ver se está de acordo --
+CREATE VIEW view_reservas AS SELECT
+    
+    r.id AS reserva_id,
+    h.nome AS hospede,
+    q.numero AS quarto,
+    q.tipo AS tipo_quarto,
+    r.data_entrada,
+    r.data_saida,
+    DATEDIFF(r.data_saida, r.data_entrada) * q.valor_diaria AS valor_estimado
+    
+FROM reservas r
+INNER JOIN hospedes h ON r.hospede_id = h.id
+INNER JOIN quartos q ON r.quarto_id = q.id;
 
 SELECT * FROM hospedes;
 SELECT * FROM quartos;
 SELECT * FROM reservas;
+SELECT * FROM view_reservas;
