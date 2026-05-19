@@ -4,63 +4,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <title>HOTELARIA - QUARTOS</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <script defer src="{{ url_for('static', path='js/script.js') }}"></script>
+    <title>Hotelaria | Quartos</title>
 
 </head>
 
-<body>
+<body class="dashboard-page">
       <div class="navbar">
           <a href="/hospede">HÓSPEDES</a>
          <a href="/quartos">QUARTOS</a>
          <a href="/reservas">RESERVAS</a>
      </div>
 
-    <main class="hospedes">
-        <header class="hospedes__header">
-            <div>
-                <h1 class="hospedes__title">Lista de quartos</h1>
-                <p class="hospedes__subtitle">Visualize os quartos e use as ações para editar ou excluir.</p>
+    <main class="dashboard-shell">
+        <section class="panel dashboard-hero" data-reveal>
+            <div class="dashboard-hero__copy">
+                <p class="dashboard-kicker">Estrutura</p>
+                <h1 class="dashboard-title">Lista de quartos</h1>
+                <p class="dashboard-subtitle">Visualize os quartos, acompanhe o status e use as ações para editar ou excluir.</p>
             </div>
-            <div class="hospedes__toolbar">
-                <a class="hospedes__button hospedes__button--primary" href="/add_quarto">Adicionar novo quarto</a>
-                <a class="hospedes__button" href="/">Home</a>
+            <div class="dashboard-hero__chips" aria-label="Ações rápidas">
+                <a class="dashboard-chip" href="/add_quarto">Novo quarto</a>
+                <a class="dashboard-chip" href="/">Dashboard</a>
+                <a class="dashboard-chip" href="/reservas">Reservas</a>
             </div>
-        </header>
+        </section>
 
-        <section class="hospedes__table-wrapper">
-            <table class="hospedes__table">
-                <thead class="hospedes__head">
-                    <tr class="hospedes__row">
-                        <th class="hospedes__head-cell">ID</th>
-                        <th class="hospedes__head-cell">Número</th>
-                        <th class="hospedes__head-cell">Tipo</th>
-                        <th class="hospedes__head-cell">Valor diária</th>
-                        <th class="hospedes__head-cell">Status</th>
-                        <th class="hospedes__head-cell">Ações</th>
-                    </tr>
-                </thead>
-                <tbody class="hospedes__body">
-                    {% for quarto in context %}
+        <section class="metrics-grid" aria-label="Resumo dos quartos">
+            <article class="metric-card" data-reveal>
+                <span class="metric-card__label">Total listado</span>
+                <strong class="metric-card__value" data-count-up="{{ context | length }}">0</strong>
+            </article>
+            <article class="metric-card" data-reveal>
+                <span class="metric-card__label">Porta de entrada</span>
+                <strong class="metric-card__value">Hotel</strong>
+            </article>
+            <article class="metric-card metric-card--accent" data-reveal>
+                <span class="metric-card__label">Gestão</span>
+                <strong class="metric-card__value">Quartos</strong>
+            </article>
+            <article class="metric-card" data-reveal>
+                <span class="metric-card__label">Controle</span>
+                <strong class="metric-card__value">Status</strong>
+            </article>
+        </section>
+
+        <section class="panel dashboard-actions" aria-labelledby="quartos-acoes-title" data-reveal>
+            <div class="section-heading">
+                <div>
+                    <p class="section-heading__eyebrow">Atalhos do sistema</p>
+                    <h2 id="quartos-acoes-title">Acesso rápido</h2>
+                </div>
+                <p class="section-heading__subtitle">Abra o formulário de cadastro ou volte ao início quando precisar.</p>
+            </div>
+
+            <div class="action-grid">
+                <a class="action-card" href="/add_quarto" data-reveal>
+                    <span class="action-card__tag">Cadastro</span>
+                    <strong>Adicionar quarto</strong>
+                    <p>Cadastre novos quartos com número, tipo, valor e status.</p>
+                </a>
+                <a class="action-card" href="/" data-reveal>
+                    <span class="action-card__tag">Resumo</span>
+                    <strong>Dashboard</strong>
+                    <p>Retorne ao painel principal com os indicadores gerais.</p>
+                </a>
+                <a class="action-card" href="/reservas" data-reveal>
+                    <span class="action-card__tag">Fluxo</span>
+                    <strong>Reservas</strong>
+                    <p>Veja como os quartos estão sendo usados no sistema.</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="hospedes__table-wrapper" data-reveal>
+            {% if context %}
+                <table class="hospedes__table">
+                    <thead class="hospedes__head">
                         <tr class="hospedes__row">
-                            <td class="hospedes__cell">{{ quarto.id }}</td>
-                            <td class="hospedes__cell">{{ quarto.numero }}</td>
-                            <td class="hospedes__cell">{{ quarto.tipo }}</td>
-                            <td class="hospedes__cell">{{ quarto.valor_diaria }}</td>
-                            <td class="hospedes__cell">{{ quarto.status }}</td>
-                            <td class="hospedes__cell">
-                                <div class="hospedes__actions">
-                                    <a class="hospedes__action hospedes__action--edit" href="/edit_quarto/{{ quarto.id }}">Editar</a>
-                                    <form action="/delete_quarto/{{ quarto.id }}" method="POST">
-                                    <button class="hospedes__action hospedes__action--delete"
-                                        type="submit"> Excluir</button>
-                                    </form>
-                                </div>
-                            </td>
+                            <th class="hospedes__head-cell">ID</th>
+                            <th class="hospedes__head-cell">Número</th>
+                            <th class="hospedes__head-cell">Tipo</th>
+                            <th class="hospedes__head-cell">Valor diária</th>
+                            <th class="hospedes__head-cell">Status</th>
+                            <th class="hospedes__head-cell">Ações</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="hospedes__body">
+                        {% for quarto in context %}
+                            <tr class="hospedes__row">
+                                <td class="hospedes__cell">{{ quarto.id }}</td>
+                                <td class="hospedes__cell">{{ quarto.numero }}</td>
+                                <td class="hospedes__cell">{{ quarto.tipo }}</td>
+                                <td class="hospedes__cell">{{ quarto.valor_diaria }}</td>
+                                <td class="hospedes__cell">{{ quarto.status }}</td>
+                                <td class="hospedes__cell">
+                                    <div class="hospedes__actions">
+                                        <a class="hospedes__action hospedes__action--edit" href="/edit_quarto/{{ quarto.id }}">Editar</a>
+                                        <form action="/delete_quarto/{{ quarto.id }}" method="POST">
+                                            <button class="hospedes__action hospedes__action--delete" type="submit">Excluir</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="hospedes__no-data">
+                    Nenhum quarto cadastrado no momento.
+                </div>
+            {% endif %}
         </section>
     </main>
 </body>

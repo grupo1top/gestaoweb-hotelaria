@@ -4,48 +4,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/style.css">
-
-    <title>HOTELARIA</title>
-
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <script defer src="{{ url_for('static', path='js/script.js') }}"></script>
+    <title>Hotelaria | Dashboard</title>
 </head>
 
-<body>
-    <header class="dashboard-header">
-        <div>
-            <p class="dashboard-header__eyebrow">Gestão da hotelaria</p>
-            <h1 class="dashboard-header__title">Dashboard do sistema</h1>
-            <p class="dashboard-header__subtitle">Acompanhe os principais números e navegue pelas áreas do sistema.</p>
-        </div>
-    </header>
+<body class="dashboard-page">
+    <main class="dashboard-shell">
+        <section class="panel dashboard-hero" data-reveal>
+            <div class="dashboard-hero__copy">
+                <p class="dashboard-kicker">Gestão da hotelaria</p>
+                <h1 class="dashboard-title">Dashboard do sistema</h1>
+                <p class="dashboard-subtitle">Acompanhe os números principais e acesse rapidamente hóspedes, quartos e reservas.</p>
+            </div>
+            <div class="dashboard-hero__chips" aria-label="Categorias principais">
+                <span class="dashboard-chip">Operação</span>
+                <span class="dashboard-chip">Recepção</span>
+                <span class="dashboard-chip">Reservas</span>
+            </div>
+        </section>
 
-    <main class="dashboard">
-        <section class="dashboard__cards">
-            <article class="dashboard-card">
-                <span class="dashboard-card__label">Quantidade de hóspedes</span>
-                <strong class="dashboard-card__value">{{ dashboard.total_hospedes }}</strong>
+        <section class="metrics-grid" aria-label="Indicadores principais">
+            <article class="metric-card" data-reveal>
+                <span class="metric-card__label">Quantidade de hóspedes</span>
+                <strong class="metric-card__value" data-count-up="{{ dashboard.total_hospedes | int }}">0</strong>
             </article>
-            <article class="dashboard-card">
-                <span class="dashboard-card__label">Quantidade de quartos</span>
-                <strong class="dashboard-card__value">{{ dashboard.total_quartos }}</strong>
+            <article class="metric-card" data-reveal>
+                <span class="metric-card__label">Quantidade de quartos</span>
+                <strong class="metric-card__value" data-count-up="{{ dashboard.total_quartos | int }}">0</strong>
             </article>
-            <article class="dashboard-card dashboard-card--accent">
-                <span class="dashboard-card__label">Reservas ativas</span>
-                <strong class="dashboard-card__value">{{ dashboard.total_reservas_ativas }}</strong>
+            <article class="metric-card metric-card--accent" data-reveal>
+                <span class="metric-card__label">Reservas ativas</span>
+                <strong class="metric-card__value" data-count-up="{{ dashboard.total_reservas_ativas | int }}">0</strong>
             </article>
-            <article class="dashboard-card">
-                <span class="dashboard-card__label">Rendimentos</span>
-                <strong class="dashboard-card__value">{{ dashboard.total_rendimentos }}</strong>
+            <article class="metric-card" data-reveal>
+                <span class="metric-card__label">Rendimentos</span>
+                <strong class="metric-card__value" data-count-up="{{ dashboard.total_rendimentos }}">0</strong>
             </article>
         </section>
 
-        <section>
-            <h2>Atalhos do sistema</h2>
-            <p>Acesse rapidamente as páginas principais do fluxo de hotelaria.</p>
-            <div class="hospedes__toolbar">
-                <a class="hospedes__button" href="/hospede">Hóspedes</a>
-                <a class="hospedes__button" href="/quartos">Quartos</a>
-                <a class="hospedes__button" href="/reservas">Reservas</a>
+        <section class="panel dashboard-actions" aria-labelledby="dashboard-actions-title" data-reveal>
+            <div class="section-heading">
+                <div>
+                    <p class="section-heading__eyebrow">Atalhos do sistema</p>
+                    <h2 id="dashboard-actions-title">Acesso rápido</h2>
+                </div>
+                <p class="section-heading__subtitle">Navegue pelas áreas principais com um clique.</p>
+            </div>
+
+            <div class="action-grid">
+                <a class="action-card" href="/hospede" data-reveal>
+                    <span class="action-card__tag">Cadastro</span>
+                    <strong>Hóspedes</strong>
+                    <p>Gerencie clientes, contatos e dados cadastrais.</p>
+                </a>
+                <a class="action-card" href="/quartos" data-reveal>
+                    <span class="action-card__tag">Estrutura</span>
+                    <strong>Quartos</strong>
+                    <p>Consulte disponibilidade, tipos e status de ocupação.</p>
+                </a>
+                <a class="action-card" href="/reservas" data-reveal>
+                    <span class="action-card__tag">Agenda</span>
+                    <strong>Reservas</strong>
+                    <p>Acompanhe entradas, saídas e movimentações ativas.</p>
+                </a>
             </div>
         </section>
     </main>

@@ -3,24 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <title>HOTELARIA - ADICIONAR HOSPEDE</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <script defer src="{{ url_for('static', path='js/script.js') }}"></script>
+    <title>Hotelaria | Novo hóspede</title>
 
 </head>
-<body>
+<body class="dashboard-page">
    <div class="navbar">
         <a href="/hospede">HÓSPEDES</a>
        <a href="/quartos">QUARTOS</a>
        <a href="/reservas">RESERVAS</a>
     </div>
-    <h1>Fórmulario de cadastro de hóspede</h1>
-    <form action="/add_hospede" method="POST">
-        <input type="text" name="nome" placeholder="Nome completo ">
-        <input type="email" name="email" placeholder="email">
-        <input type="text" name="telefone" placeholder="telefone ">
-        <input type="text" name="cpf" placeholder="somente números">
-        <button type="submit">Cadastrar hóspede</button>
-    </form>
+    <main class="dashboard-shell">
+        <section class="panel dashboard-hero" data-reveal>
+            <div class="dashboard-hero__copy">
+                <p class="dashboard-kicker">Cadastro</p>
+                <h1 class="dashboard-title">Novo hóspede</h1>
+                <p class="dashboard-subtitle">Preencha os dados do cliente para incluir um novo cadastro no sistema.</p>
+            </div>
+            <div class="dashboard-hero__chips" aria-label="Ações rápidas">
+                <a class="dashboard-chip" href="/hospede">Voltar para hóspedes</a>
+                <a class="dashboard-chip" href="/">Dashboard</a>
+            </div>
+        </section>
+
+        <section class="metrics-grid" aria-label="Resumo do cadastro">
+            <article class="metric-card" data-reveal>
+                <span class="metric-card__label">Ação</span>
+                <strong class="metric-card__value">Criar</strong>
+            </article>
+            <article class="metric-card" data-reveal>
+                <span class="metric-card__label">Fluxo</span>
+                <strong class="metric-card__value">Hóspedes</strong>
+            </article>
+            <article class="metric-card metric-card--accent" data-reveal>
+                <span class="metric-card__label">Campos</span>
+                <strong class="metric-card__value">4</strong>
+            </article>
+            <article class="metric-card" data-reveal>
+                <span class="metric-card__label">Status</span>
+                <strong class="metric-card__value">Novo</strong>
+            </article>
+        </section>
+
+        <section class="panel dashboard-actions" aria-labelledby="add-hospede-title" data-reveal>
+            <div class="section-heading">
+                <div>
+                    <p class="section-heading__eyebrow">Formulário</p>
+                    <h2 id="add-hospede-title">Cadastro de hóspedes</h2>
+                </div>
+                <p class="section-heading__subtitle">Preencha os campos abaixo para registrar um novo hóspede.</p>
+            </div>
+
+            <form action="/add_hospede" method="POST">
+                <label>
+                    <span class="hint">Nome completo</span>
+                    <input type="text" name="nome" placeholder="Nome completo" required>
+                </label>
+                <label>
+                    <span class="hint">Email</span>
+                    <input type="email" name="email" placeholder="Email" required>
+                </label>
+                <label>
+                    <span class="hint">Telefone</span>
+                    <input type="text" name="telefone" placeholder="Telefone" required>
+                </label>
+                <label>
+                    <span class="hint">CPF</span>
+                    <input type="text" name="cpf" placeholder="Somente números" required>
+                </label>
+                <div class="hospedes__toolbar">
+                    <button type="submit" class="hospedes__button hospedes__button--primary">Cadastrar hóspede</button>
+                    <a class="hospedes__button" href="/hospede">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
 
 </body>
 </html>

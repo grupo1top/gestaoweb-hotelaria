@@ -3,66 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <title>HOTELARIA - RESERVAS</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <script defer src="{{ url_for('static', path='js/script.js') }}"></script>
+    <title>Hotelaria | Reservas</title>
 
 </head>
-<body>
+<body class="dashboard-page">
       <div class="navbar">
           <a href="/hospede">HÓSPEDES</a>
          <a href="/quartos">QUARTOS</a>
          <a href="/reservas">RESERVAS</a>
      </div>
 
-    <main class="hospedes">
-        <header class="hospedes__header">
-            <div>
-                <h1 class="hospedes__title">Lista de reservas</h1>
-                <p class="hospedes__subtitle">Visualize as reservas e use as ações para editar ou excluir.</p>
+    <main class="dashboard-shell">
+        <section class="panel dashboard-hero" data-reveal>
+            <div class="dashboard-hero__copy">
+                <p class="dashboard-kicker">Movimentação</p>
+                <h1 class="dashboard-title">Lista de reservas</h1>
+                <p class="dashboard-subtitle">Visualize as reservas e use as ações para editar, excluir ou consultar por hóspede.</p>
             </div>
-            <div class="hospedes__toolbar">
-                <form class="hospedes__search" action="/reservas" method="get" onsubmit="event.preventDefault(); const id = this.elements.id.value.trim(); if (id) { window.location.href = '/reservas/' + id; }">
-                    <input class="hospedes__search-input" type="number" name="id" min="1" placeholder="ID do hóspede" required>
-                    <button class="hospedes__button hospedes__button--primary" type="submit">Buscar</button>
-                </form>
-                <a class="hospedes__button hospedes__button--primary" href="/add_reserva">Adicionar nova reserva</a>
-                <a class="hospedes__button" href="/">Home</a>
-                <a href="/reservas/{id}">Consultar reserva por ID</a>
+            <div class="dashboard-hero__chips" aria-label="Ações rápidas">
+                <a class="dashboard-chip" href="/add_reserva">Nova reserva</a>
+                <a class="dashboard-chip" href="/reservas/1">Buscar por ID</a>
+                <a class="dashboard-chip" href="/">Dashboard</a>
             </div>
-        </header>
+        </section>
 
-        <section class="hospedes__table-wrapper">
-            <table class="hospedes__table">
-                <thead class="hospedes__head">
-                    <tr class="hospedes__row">
-                        <th class="hospedes__head-cell">ID</th>
-                        <th class="hospedes__head-cell">Hóspede</th>
-                        <th class="hospedes__head-cell">Quarto</th>
-                        <th class="hospedes__head-cell">Data entrada</th>
-                        <th class="hospedes__head-cell">Data saída</th>
-                        <th class="hospedes__head-cell">Ações</th>
-                    </tr>
-                </thead>
-                <tbody class="hospedes__body">
-                    {% for reserva in context %}
+        <section class="metrics-grid" aria-label="Resumo das reservas">
+            <article class="metric-card" data-reveal>
+                <span class="metric-card__label">Total listado</span>
+                <strong class="metric-card__value" data-count-up="{{ context | length }}">0</strong>
+            </article>
+            <article class="metric-card" data-reveal>
+                <span class="metric-card__label">Fluxo</span>
+                <strong class="metric-card__value">Ativo</strong>
+            </article>
+            <article class="metric-card metric-card--accent" data-reveal>
+                <span class="metric-card__label">Gestão</span>
+                <strong class="metric-card__value">Reservas</strong>
+            </article>
+            <article class="metric-card" data-reveal>
+                <span class="metric-card__label">Consulta</span>
+                <strong class="metric-card__value">ID</strong>
+            </article>
+        </section>
+
+        <section class="panel dashboard-actions" aria-labelledby="reservas-acoes-title" data-reveal>
+            <div class="section-heading">
+                <div>
+                    <p class="section-heading__eyebrow">Atalhos do sistema</p>
+                    <h2 id="reservas-acoes-title">Acesso rápido</h2>
+                </div>
+                <p class="section-heading__subtitle">Use a busca para abrir a view de um hóspede específico.</p>
+            </div>
+
+            <form class="hospedes__search" action="/reservas" method="get" onsubmit="event.preventDefault(); const id = this.elements.id.value.trim(); if (id) { window.location.href = '/reservas/' + id; }">
+                <input class="hospedes__search-input" type="number" name="id" min="1" placeholder="ID do hóspede" required>
+                <button class="hospedes__button hospedes__button--primary" type="submit">Buscar</button>
+                <a class="hospedes__button" href="/add_reserva">Adicionar nova reserva</a>
+                <a class="hospedes__button" href="/">Home</a>
+            </form>
+        </section>
+
+        <section class="hospedes__table-wrapper" data-reveal>
+            {% if context %}
+                <table class="hospedes__table">
+                    <thead class="hospedes__head">
                         <tr class="hospedes__row">
-                            <td class="hospedes__cell">{{ reserva.id }}</td>
-                            <td class="hospedes__cell">{{ reserva.nome_hospede }}</td>
-                            <td class="hospedes__cell">{{ reserva.numero_quarto }}</td>
-                            <td class="hospedes__cell">{{ reserva.data_entrada }}</td>
-                            <td class="hospedes__cell">{{ reserva.data_saida }}</td>
-                            <td class="hospedes__cell">
-                                <div class="hospedes__actions">
-                                    <a class="hospedes__action hospedes__action--edit" href="/edit_reserva/{{ reserva.id }}">Editar</a>
-                                    <form action="/delete_reserva/{{ reserva.id }}" method="POST">
-                                    <button class="hospedes__action hospedes__action--delete"
-                                        type="submit"> Excluir</button>
-                                </div>
-                            </td>
+                            <th class="hospedes__head-cell">ID</th>
+                            <th class="hospedes__head-cell">Hóspede</th>
+                            <th class="hospedes__head-cell">Quarto</th>
+                            <th class="hospedes__head-cell">Data entrada</th>
+                            <th class="hospedes__head-cell">Data saída</th>
+                            <th class="hospedes__head-cell">Ações</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="hospedes__body">
+                        {% for reserva in context %}
+                            <tr class="hospedes__row">
+                                <td class="hospedes__cell">{{ reserva.id }}</td>
+                                <td class="hospedes__cell">{{ reserva.nome_hospede }}</td>
+                                <td class="hospedes__cell">{{ reserva.numero_quarto }}</td>
+                                <td class="hospedes__cell">{{ reserva.data_entrada }}</td>
+                                <td class="hospedes__cell">{{ reserva.data_saida }}</td>
+                                <td class="hospedes__cell">
+                                    <div class="hospedes__actions">
+                                        <a class="hospedes__action hospedes__action--edit" href="/edit_reserva/{{ reserva.id }}">Editar</a>
+                                        <form action="/delete_reserva/{{ reserva.id }}" method="POST">
+                                            <button class="hospedes__action hospedes__action--delete" type="submit">Excluir</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="hospedes__no-data">
+                    Nenhuma reserva cadastrada no momento.
+                </div>
+            {% endif %}
         </section>
     </main>
 
