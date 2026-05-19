@@ -8,6 +8,56 @@
 
 </head>
 <body>
-    
+    <div class="navbar">
+        <a href="/hospede">HÓSPEDES</a>
+        <a href="/quartos">QUARTOS</a>
+        <a href="/reservas">RESERVAS</a>
+    </div>
+
+    <main class="hospedes">
+        <header class="hospedes__header">
+            <div>
+                <h1 class="hospedes__title">Detalhes da reserva do hóspede {{ hospede_id }}</h1>
+                <p class="hospedes__subtitle">Lista filtrada pela view com base no ID solicitado.</p>
+            </div>
+            <div class="hospedes__toolbar">
+                <form class="hospedes__search" action="/reservas" method="get" onsubmit="event.preventDefault(); const id = this.elements.id.value.trim(); if (id) { window.location.href = '/reservas/' + id; }">
+                    <input class="hospedes__search-input" type="number" name="id" min="1" placeholder="ID do hóspede" required>
+                    <button class="hospedes__button hospedes__button--primary" type="submit">Buscar outro ID</button>
+                </form>
+                <a class="hospedes__button" href="/reservas">Voltar para reservas</a>
+                <a class="hospedes__button" href="/">Home</a>
+            </div>
+        </header>
+
+        <section class="hospedes__table-wrapper">
+            <table class="hospedes__table">
+                <thead class="hospedes__head">
+                    <tr class="hospedes__row">
+                        <th class="hospedes__head-cell">Reserva</th>
+                        <th class="hospedes__head-cell">Hóspede</th>
+                        <th class="hospedes__head-cell">Quarto</th>
+                        <th class="hospedes__head-cell">Tipo</th>
+                        <th class="hospedes__head-cell">Entrada</th>
+                        <th class="hospedes__head-cell">Saída</th>
+                        <th class="hospedes__head-cell">Valor estimado</th>
+                    </tr>
+                </thead>
+                <tbody class="hospedes__body">
+                    {% for reserva in context %}
+                        <tr class="hospedes__row">
+                            <td class="hospedes__cell">{{ reserva.reserva_id }}</td>
+                            <td class="hospedes__cell">{{ reserva.hospede }}</td>
+                            <td class="hospedes__cell">{{ reserva.quarto }}</td>
+                            <td class="hospedes__cell">{{ reserva.tipo_quarto }}</td>
+                            <td class="hospedes__cell">{{ reserva.data_entrada }}</td>
+                            <td class="hospedes__cell">{{ reserva.data_saida }}</td>
+                            <td class="hospedes__cell">{{ reserva.valor_estimado }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
 </body>
 </html>

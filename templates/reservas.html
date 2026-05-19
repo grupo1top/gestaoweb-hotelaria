@@ -21,6 +21,10 @@
                 <p class="hospedes__subtitle">Visualize as reservas e use as ações para editar ou excluir.</p>
             </div>
             <div class="hospedes__toolbar">
+                <form class="hospedes__search" action="/reservas" method="get" onsubmit="event.preventDefault(); const id = this.elements.id.value.trim(); if (id) { window.location.href = '/reservas/' + id; }">
+                    <input class="hospedes__search-input" type="number" name="id" min="1" placeholder="ID do hóspede" required>
+                    <button class="hospedes__button hospedes__button--primary" type="submit">Buscar</button>
+                </form>
                 <a class="hospedes__button hospedes__button--primary" href="/add_reserva">Adicionar nova reserva</a>
                 <a class="hospedes__button" href="/">Home</a>
             </div>

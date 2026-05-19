@@ -202,11 +202,11 @@ async def consultar_reserva(request:Request):
     context={"context":consulta_reservas()}) 
 
 @app.get("/reservas/{id}")
-async def consultar_reserva(request:Request):
+async def consultar_reserva(request:Request, id:int):
     return templates.TemplateResponse(
     request=request, 
-    name="reservas.html", 
-    context={"context":consulta_reserva_id()}) 
+    name="view_reserva.html", 
+    context={"context":view_reserva(id), "hospede_id": id}) 
 
 #cadastrar aluno
 

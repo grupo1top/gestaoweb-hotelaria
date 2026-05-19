@@ -74,6 +74,8 @@ CREATE VIEW view_reservas AS SELECT
     
     -- id da reserva
     r.id AS reserva_id,
+    -- id do hospede
+    r.hospede_id AS hospede_id,
     -- hospede
     h.nome AS hospede,
     -- quarto

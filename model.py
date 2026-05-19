@@ -192,16 +192,16 @@ def consulta_reservas():
 
         '''
         SELECT 
-            reservas.id,
-            hospedes.nome AS nome_hospede,
-            quartos.numero AS numero_quarto,
-            reservas.data_entrada,
-            reservas.data_saida
-        FROM reservas
-        JOIN hospedes 
-            ON reservas.hospede_id = hospedes.id
-        JOIN quartos 
-            ON reservas.quarto_id = quartos.id;
+            r.id AS id,
+            h.nome AS nome_hospede,
+            q.numero AS numero_quarto,
+            r.data_entrada,
+            r.data_saida
+        FROM reservas r
+        INNER JOIN hospedes h 
+            ON r.hospede_id = h.id
+        INNER JOIN quartos q 
+            ON r.quarto_id = q.id;
         '''
 
     )
@@ -275,16 +275,28 @@ def delete_reserva(id_user):
     conn.close()
 
 def view_reserva(id_user):
-
-    conn - connection()
-    cursor = conn.cursor()  
+    conn = connection()
+    cursor = conn.cursor(dictionary=True)
 
     cursor.execute(
-
-
+        '''
+        SELECT 
+            reserva_id,
+            hospede,
+            quarto,
+            tipo_quarto,
+            data_entrada,
+            data_saida,
+            valor_estimado
+        FROM view_reservas
+        WHERE hospede_id = %s
+        ORDER BY data_entrada DESC
+        ''',
+        (id_user,)
     )
 
-    conn.commit()
+    dados = cursor.fetchall()
     conn.close()
 
-    
+    return dados
+
