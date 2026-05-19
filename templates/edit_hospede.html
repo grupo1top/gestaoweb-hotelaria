@@ -1,86 +1,54 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
     <script defer src="{{ url_for('static', path='js/script.js') }}"></script>
     <title>Hotelaria | Editar hóspede</title>
-
 </head>
+<body>
+    <a class="site-logo" href="/" aria-label="Ir para a página inicial">
+        <img src="{{ url_for('static', path='img/logo.png') }}" alt="Logo da hotelaria">
+    </a>
+    <nav class="site-nav" aria-label="Navegação principal">
+        <a href="/">Home</a>
+        <a href="/hospede">Hóspedes</a>
+        <a href="/quartos">Quartos</a>
+        <a href="/reservas">Reservas</a>
+    </nav>
 
-<body class="dashboard-page">
-    <div class="navbar">
-        <a href="/hospede">HÓSPEDES</a>
-       <a href="/quartos">QUARTOS</a>
-       <a href="/reservas">RESERVAS</a>
-    </div>
-    <main class="dashboard-shell">
-        <section class="panel dashboard-hero" data-reveal>
-            <div class="dashboard-hero__copy">
-                <p class="dashboard-kicker">Edição</p>
-                <h1 class="dashboard-title">Editar informações do hóspede</h1>
-                <p class="dashboard-subtitle">Insira os dados atualizados do hóspede cadastrado.</p>
-            </div>
-            <div class="dashboard-hero__chips" aria-label="Ações rápidas">
-                <a class="dashboard-chip" href="/hospede">Voltar para hóspedes</a>
-                <a class="dashboard-chip" href="/">Dashboard</a>
-            </div>
-        </section>
+    <main class="page-shell">
+        <header class="page-header">
+            <p class="eyebrow">Edição</p>
+            <h1 class="page-title">Editar informações do hóspede</h1>
+            <p class="page-subtitle">Insira os dados atualizados do hóspede cadastrado.</p>
+        </header>
 
-        <section class="metrics-grid" aria-label="Resumo da edição">
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Hóspede</span>
-                <strong class="metric-card__value">{{ hospede.id }}</strong>
-            </article>
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Nome</span>
-                <strong class="metric-card__value">{{ hospede.nome }}</strong>
-            </article>
-            <article class="metric-card metric-card--accent" data-reveal>
-                <span class="metric-card__label">Contato</span>
-                <strong class="metric-card__value">{{ hospede.telefone }}</strong>
-            </article>
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Email</span>
-                <strong class="metric-card__value">{{ hospede.email }}</strong>
-            </article>
-        </section>
-
-        <section class="panel dashboard-actions" aria-labelledby="edit-hospede-title" data-reveal>
-            <div class="section-heading">
-                <div>
-                    <p class="section-heading__eyebrow">Formulário</p>
-                    <h2 id="edit-hospede-title">Atualizar hóspede</h2>
-                </div>
-                <p class="section-heading__subtitle">Os campos abaixo já vêm preenchidos com os dados atuais.</p>
-            </div>
-
+        <section class="form-panel">
             <form action="/edit_hospede/{{ hospede.id }}" method="POST">
                 <label>
-                    <span class="hint">Nome completo</span>
+                    <span>Nome completo</span>
                     <input type="text" name="nome" placeholder="Nome completo" value="{{ hospede.nome }}" required>
                 </label>
                 <label>
-                    <span class="hint">Email</span>
+                    <span>Email</span>
                     <input type="email" name="email" placeholder="Email" value="{{ hospede.email }}" required>
                 </label>
                 <label>
-                    <span class="hint">Telefone</span>
+                    <span>Telefone</span>
                     <input type="text" name="telefone" placeholder="Telefone" value="{{ hospede.telefone }}" required>
                 </label>
                 <label>
-                    <span class="hint">CPF</span>
+                    <span>CPF</span>
                     <input type="text" name="cpf" placeholder="Somente números" value="{{ hospede.cpf }}" required>
                 </label>
-                <div class="hospedes__toolbar">
-                    <button type="submit" class="hospedes__button hospedes__button--primary">Editar hóspede</button>
-                    <a class="hospedes__button" href="/hospede">Cancelar</a>
+                <div class="inline-actions">
+                    <button type="submit" class="button button-primary">Editar hóspede</button>
+                    <a class="button" href="/hospede">Cancelar</a>
                 </div>
             </form>
         </section>
     </main>
 </body>
-
 </html>

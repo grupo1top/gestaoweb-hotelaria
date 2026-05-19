@@ -6,79 +6,49 @@
     <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
     <script defer src="{{ url_for('static', path='js/script.js') }}"></script>
     <title>Hotelaria | Novo hóspede</title>
-
 </head>
-<body class="dashboard-page">
-   <div class="navbar">
-        <a href="/hospede">HÓSPEDES</a>
-       <a href="/quartos">QUARTOS</a>
-       <a href="/reservas">RESERVAS</a>
-    </div>
-    <main class="dashboard-shell">
-        <section class="panel dashboard-hero" data-reveal>
-            <div class="dashboard-hero__copy">
-                <p class="dashboard-kicker">Cadastro</p>
-                <h1 class="dashboard-title">Novo hóspede</h1>
-                <p class="dashboard-subtitle">Preencha os dados do cliente para incluir um novo cadastro no sistema.</p>
-            </div>
-            <div class="dashboard-hero__chips" aria-label="Ações rápidas">
-                <a class="dashboard-chip" href="/hospede">Voltar para hóspedes</a>
-                <a class="dashboard-chip" href="/">Dashboard</a>
-            </div>
-        </section>
+<body>
+    <a class="site-logo" href="/" aria-label="Ir para a página inicial">
+        <img src="{{ url_for('static', path='img/logo.png') }}" alt="Logo da hotelaria">
+    </a>
+    <nav class="site-nav" aria-label="Navegação principal">
+        <a href="/">Home</a>
+        <a href="/hospede">Hóspedes</a>
+        <a href="/quartos">Quartos</a>
+        <a href="/reservas">Reservas</a>
+    </nav>
 
-        <section class="metrics-grid" aria-label="Resumo do cadastro">
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Ação</span>
-                <strong class="metric-card__value">Criar</strong>
-            </article>
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Fluxo</span>
-                <strong class="metric-card__value">Hóspedes</strong>
-            </article>
-            <article class="metric-card metric-card--accent" data-reveal>
-                <span class="metric-card__label">Campos</span>
-                <strong class="metric-card__value">4</strong>
-            </article>
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Status</span>
-                <strong class="metric-card__value">Novo</strong>
-            </article>
-        </section>
+    <main class="page-shell">
+        <header class="page-header">
+            <p class="eyebrow">Cadastro</p>
+            <h1 class="page-title">Novo hóspede</h1>
+            <p class="page-subtitle">Preencha os dados do cliente para incluir um novo cadastro no sistema.</p>
+        </header>
 
-        <section class="panel dashboard-actions" aria-labelledby="add-hospede-title" data-reveal>
-            <div class="section-heading">
-                <div>
-                    <p class="section-heading__eyebrow">Formulário</p>
-                    <h2 id="add-hospede-title">Cadastro de hóspedes</h2>
-                </div>
-                <p class="section-heading__subtitle">Preencha os campos abaixo para registrar um novo hóspede.</p>
-            </div>
-
+        <section class="form-panel">
             <form action="/add_hospede" method="POST">
                 <label>
-                    <span class="hint">Nome completo</span>
+                    <span>Nome completo</span>
                     <input type="text" name="nome" placeholder="Nome completo" required>
                 </label>
                 <label>
-                    <span class="hint">Email</span>
+                    <span>Email</span>
                     <input type="email" name="email" placeholder="Email" required>
                 </label>
                 <label>
-                    <span class="hint">Telefone</span>
+                    <span>Telefone</span>
                     <input type="text" name="telefone" placeholder="Telefone" required>
                 </label>
                 <label>
-                    <span class="hint">CPF</span>
+                    <span>CPF</span>
                     <input type="text" name="cpf" placeholder="Somente números" required>
                 </label>
-                <div class="hospedes__toolbar">
-                    <button type="submit" class="hospedes__button hospedes__button--primary">Cadastrar hóspede</button>
-                    <a class="hospedes__button" href="/hospede">Cancelar</a>
+                <div class="inline-actions">
+                    <button type="submit" class="button button-primary">Cadastrar hóspede</button>
+                    <a class="button" href="/hospede">Cancelar</a>
                 </div>
             </form>
         </section>
     </main>
-
 </body>
 </html>

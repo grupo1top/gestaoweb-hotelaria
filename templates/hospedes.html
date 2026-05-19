@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,100 +7,58 @@
     <script defer src="{{ url_for('static', path='js/script.js') }}"></script>
     <title>Hotelaria | Hóspedes</title>
 </head>
+<body>
+    <a class="site-logo" href="/" aria-label="Ir para a página inicial">
+        <img src="{{ url_for('static', path='img/logo.png') }}" alt="Logo da hotelaria">
+    </a>
+    <nav class="site-nav" aria-label="Navegação principal">
+        <a href="/">Home</a>
+        <a href="/hospede">Hóspedes</a>
+        <a href="/quartos">Quartos</a>
+        <a href="/reservas">Reservas</a>
+    </nav>
 
-<body class="dashboard-page">
-    <div class="navbar">
-        <a href="/hospede">HÓSPEDES</a>
-        <a href="/quartos">QUARTOS</a>
-        <a href="/reservas">RESERVAS</a>
-    </div>
-    <main class="dashboard-shell">
-        <section class="panel dashboard-hero" data-reveal>
-            <div class="dashboard-hero__copy">
-                <p class="dashboard-kicker">Cadastro</p>
-                <h1 class="dashboard-title">Lista de hóspedes</h1>
-                <p class="dashboard-subtitle">Visualize os dados, acompanhe o cadastro e use as ações para editar ou excluir.</p>
-            </div>
-            <div class="dashboard-hero__chips" aria-label="Ações rápidas">
-                <a class="dashboard-chip" href="/add_hospede">Novo hóspede</a>
-                <a class="dashboard-chip" href="/">Dashboard</a>
-                <a class="dashboard-chip" href="/reservas">Reservas</a>
-            </div>
-        </section>
+    <main class="page-shell">
+        <header class="page-header">
+            <p class="eyebrow">Cadastro</p>
+            <h1 class="page-title">Lista de hóspedes</h1>
+            <p class="page-subtitle">Visualize os dados, acompanhe o cadastro e use as ações para editar ou excluir.</p>
+        </header>
 
-        <section class="metrics-grid" aria-label="Resumo dos hóspedes">
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Total listado</span>
-                <strong class="metric-card__value" data-count-up="{{ context | length }}">0</strong>
-            </article>
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Status</span>
-                <strong class="metric-card__value">Ativo</strong>
-            </article>
-            <article class="metric-card metric-card--accent" data-reveal>
-                <span class="metric-card__label">Gestão</span>
-                <strong class="metric-card__value">Hóspedes</strong>
-            </article>
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Controle</span>
-                <strong class="metric-card__value">Cadastro</strong>
-            </article>
-        </section>
+        <div class="page-actions">
+            <a class="button button-primary" href="/add_hospede">Novo hóspede</a>
+        </div>
 
-        <section class="panel dashboard-actions" aria-labelledby="hospedes-acoes-title" data-reveal>
-            <div class="section-heading">
-                <div>
-                    <p class="section-heading__eyebrow">Atalhos do sistema</p>
-                    <h2 id="hospedes-acoes-title">Acesso rápido</h2>
-                </div>
-                <p class="section-heading__subtitle">Abra o formulário, volte ao painel ou siga para reservas.</p>
-            </div>
+        {% if error_message %}
+            <p class="small-note alert-error">{{ error_message }}</p>
+        {% endif %}
 
-            <div class="action-grid">
-                <a class="action-card" href="/add_hospede" data-reveal>
-                    <span class="action-card__tag">Cadastro</span>
-                    <strong>Adicionar hóspede</strong>
-                    <p>Inclua novos hóspedes com nome, CPF, telefone e e-mail.</p>
-                </a>
-                <a class="action-card" href="/" data-reveal>
-                    <span class="action-card__tag">Resumo</span>
-                    <strong>Dashboard</strong>
-                    <p>Volte ao painel principal com os indicadores gerais.</p>
-                </a>
-                <a class="action-card" href="/reservas" data-reveal>
-                    <span class="action-card__tag">Fluxo</span>
-                    <strong>Reservas</strong>
-                    <p>Veja a relação entre hóspedes e reservas no sistema.</p>
-                </a>
-            </div>
-        </section>
-
-        <section class="hospedes__table-wrapper" data-reveal>
+        <section class="table-wrap">
             {% if context %}
-                <table class="hospedes__table">
-                    <thead class="hospedes__head">
-                        <tr class="hospedes__row">
-                            <th class="hospedes__head-cell">ID</th>
-                            <th class="hospedes__head-cell">Nome</th>
-                            <th class="hospedes__head-cell">CPF</th>
-                            <th class="hospedes__head-cell">Telefone</th>
-                            <th class="hospedes__head-cell">Email</th>
-                            <th class="hospedes__head-cell">Ações</th>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Telefone</th>
+                            <th>Email</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
-                    <tbody class="hospedes__body">
+                    <tbody>
                         {% for hospede in context %}
-                            <tr class="hospedes__row">
-                                <td class="hospedes__cell">{{ hospede.id }}</td>
-                                <td class="hospedes__cell">{{ hospede.nome }}</td>
-                                <td class="hospedes__cell">{{ hospede.cpf }}</td>
-                                <td class="hospedes__cell">{{ hospede.telefone }}</td>
-                                <td class="hospedes__cell">{{ hospede.email }}</td>
-                                <td class="hospedes__cell">
-                                    <div class="hospedes__actions">
-                                        <a class="hospedes__action hospedes__action--edit" href="/edit_hospede/{{ hospede.id }}">Editar</a>
+                            <tr>
+                                <td>{{ hospede.id }}</td>
+                                <td>{{ hospede.nome }}</td>
+                                <td>{{ hospede.cpf }}</td>
+                                <td>{{ hospede.telefone }}</td>
+                                <td>{{ hospede.email }}</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a class="button" href="/edit_hospede/{{ hospede.id }}">Editar</a>
                                         <form action="/delete_hospede/{{ hospede.id }}" method="POST">
-                                            <button class="hospedes__action hospedes__action--delete" type="submit">Excluir</button>
+                                            <button type="submit" class="button button-danger">Excluir</button>
                                         </form>
                                     </div>
                                 </td>
@@ -110,12 +67,9 @@
                     </tbody>
                 </table>
             {% else %}
-                <div class="hospedes__no-data">
-                    Nenhum hóspede cadastrado no momento.
-                </div>
+                <p class="small-note">Nenhum hóspede cadastrado no momento.</p>
             {% endif %}
         </section>
     </main>
 </body>
-
 </html>

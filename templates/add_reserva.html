@@ -6,75 +6,46 @@
     <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
     <script defer src="{{ url_for('static', path='js/script.js') }}"></script>
     <title>Hotelaria | Nova reserva</title>
-
 </head>
-<body class="dashboard-page">
-     <div class="navbar">
-        <a href="/hospede">HÓSPEDES</a>
-       <a href="/quartos">QUARTOS</a>
-       <a href="/reservas">RESERVAS</a>
-    </div>
-    <main class="dashboard-shell">
-        <section class="panel dashboard-hero" data-reveal>
-            <div class="dashboard-hero__copy">
-                <p class="dashboard-kicker">Cadastro</p>
-                <h1 class="dashboard-title">Nova reserva</h1>
-                <p class="dashboard-subtitle">Informe o hóspede, o quarto e o período da reserva para salvar o registro.</p>
-            </div>
-            <div class="dashboard-hero__chips" aria-label="Ações rápidas">
-                <a class="dashboard-chip" href="/reservas">Voltar para reservas</a>
-                <a class="dashboard-chip" href="/">Dashboard</a>
-            </div>
-        </section>
+<body>
+    <a class="site-logo" href="/" aria-label="Ir para a página inicial">
+        <img src="{{ url_for('static', path='img/logo.png') }}" alt="Logo da hotelaria">
+    </a>
+    <nav class="site-nav" aria-label="Navegação principal">
+        <a href="/">Home</a>
+        <a href="/hospede">Hóspedes</a>
+        <a href="/quartos">Quartos</a>
+        <a href="/reservas">Reservas</a>
+    </nav>
 
-        <section class="metrics-grid" aria-label="Resumo do cadastro">
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Ação</span>
-                <strong class="metric-card__value">Criar</strong>
-            </article>
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Fluxo</span>
-                <strong class="metric-card__value">Reservas</strong>
-            </article>
-            <article class="metric-card metric-card--accent" data-reveal>
-                <span class="metric-card__label">Campos</span>
-                <strong class="metric-card__value">4</strong>
-            </article>
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Status</span>
-                <strong class="metric-card__value">Novo</strong>
-            </article>
-        </section>
+    <main class="page-shell">
+        <header class="page-header">
+            <p class="eyebrow">Cadastro</p>
+            <h1 class="page-title">Nova reserva</h1>
+            <p class="page-subtitle">Informe o hóspede, o quarto e o período da reserva para salvar o registro.</p>
+        </header>
 
-        <section class="panel dashboard-actions" aria-labelledby="add-reserva-title" data-reveal>
-            <div class="section-heading">
-                <div>
-                    <p class="section-heading__eyebrow">Formulário</p>
-                    <h2 id="add-reserva-title">Cadastro de reservas</h2>
-                </div>
-                <p class="section-heading__subtitle">Preencha os dados abaixo para registrar a reserva.</p>
-            </div>
-
+        <section class="form-panel">
             <form action="/add_reserva" method="POST">
                 <label>
-                    <span class="hint">ID hóspede titular</span>
+                    <span>ID hóspede titular</span>
                     <input type="text" name="id_hospede" placeholder="ID hóspede" required>
                 </label>
                 <label>
-                    <span class="hint">ID do quarto reservado</span>
+                    <span>ID do quarto reservado</span>
                     <input type="text" name="id_quarto" placeholder="ID quarto" required>
                 </label>
                 <label>
-                    <span class="hint">Data entrada</span>
+                    <span>Data entrada</span>
                     <input type="date" name="data_entrada" required>
                 </label>
                 <label>
-                    <span class="hint">Data saída</span>
+                    <span>Data saída</span>
                     <input type="date" name="data_saida" required>
                 </label>
-                <div class="hospedes__toolbar">
-                    <button type="submit" class="hospedes__button hospedes__button--primary">Cadastrar reserva</button>
-                    <a class="hospedes__button" href="/reservas">Cancelar</a>
+                <div class="inline-actions">
+                    <button type="submit" class="button button-primary">Cadastrar reserva</button>
+                    <a class="button" href="/reservas">Cancelar</a>
                 </div>
             </form>
         </section>

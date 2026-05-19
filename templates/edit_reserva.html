@@ -6,75 +6,46 @@
     <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
     <script defer src="{{ url_for('static', path='js/script.js') }}"></script>
     <title>Hotelaria | Editar reserva</title>
-
 </head>
-<body class="dashboard-page">
-     <div class="navbar">
-        <a href="/hospede">HÓSPEDES</a>
-       <a href="/quartos">QUARTOS</a>
-       <a href="/reservas">RESERVAS</a>
-    </div>
-    <main class="dashboard-shell">
-        <section class="panel dashboard-hero" data-reveal>
-            <div class="dashboard-hero__copy">
-                <p class="dashboard-kicker">Edição</p>
-                <h1 class="dashboard-title">Atualização cadastral de reservas</h1>
-                <p class="dashboard-subtitle">Revise os dados abaixo e atualize apenas o que for necessário.</p>
-            </div>
-            <div class="dashboard-hero__chips" aria-label="Ações rápidas">
-                <a class="dashboard-chip" href="/reservas">Voltar para reservas</a>
-                <a class="dashboard-chip" href="/">Dashboard</a>
-            </div>
-        </section>
+<body>
+    <a class="site-logo" href="/" aria-label="Ir para a página inicial">
+        <img src="{{ url_for('static', path='img/logo.png') }}" alt="Logo da hotelaria">
+    </a>
+    <nav class="site-nav" aria-label="Navegação principal">
+        <a href="/">Home</a>
+        <a href="/hospede">Hóspedes</a>
+        <a href="/quartos">Quartos</a>
+        <a href="/reservas">Reservas</a>
+    </nav>
 
-        <section class="metrics-grid" aria-label="Resumo da edição">
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Reserva</span>
-                <strong class="metric-card__value">{{ reserva.id }}</strong>
-            </article>
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Hóspede</span>
-                <strong class="metric-card__value">{{ reserva.hospede_id }}</strong>
-            </article>
-            <article class="metric-card metric-card--accent" data-reveal>
-                <span class="metric-card__label">Quarto</span>
-                <strong class="metric-card__value">{{ reserva.quarto_id }}</strong>
-            </article>
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Período</span>
-                <strong class="metric-card__value">{{ reserva.data_entrada }} - {{ reserva.data_saida }}</strong>
-            </article>
-        </section>
+    <main class="page-shell">
+        <header class="page-header">
+            <p class="eyebrow">Edição</p>
+            <h1 class="page-title">Atualização cadastral de reservas</h1>
+            <p class="page-subtitle">Revise os dados abaixo e atualize apenas o que for necessário.</p>
+        </header>
 
-        <section class="panel dashboard-actions" aria-labelledby="edit-reserva-title" data-reveal>
-            <div class="section-heading">
-                <div>
-                    <p class="section-heading__eyebrow">Formulário</p>
-                    <h2 id="edit-reserva-title">Editar reserva</h2>
-                </div>
-                <p class="section-heading__subtitle">Os campos já começam com os dados atuais da reserva.</p>
-            </div>
-
+        <section class="form-panel">
             <form action="/edit_reserva/{{ reserva.id }}" method="POST">
                 <label>
-                    <span class="hint">ID hóspede titular</span>
+                    <span>ID hóspede titular</span>
                     <input type="text" name="id_hospede" placeholder="ID hóspede" value="{{ reserva.hospede_id }}" required>
                 </label>
                 <label>
-                    <span class="hint">ID do quarto reservado</span>
+                    <span>ID do quarto reservado</span>
                     <input type="text" name="id_quarto" placeholder="ID quarto" value="{{ reserva.quarto_id }}" required>
                 </label>
                 <label>
-                    <span class="hint">Data entrada</span>
+                    <span>Data entrada</span>
                     <input type="date" name="data_entrada" value="{{ reserva.data_entrada }}" required>
                 </label>
                 <label>
-                    <span class="hint">Data saída</span>
+                    <span>Data saída</span>
                     <input type="date" name="data_saida" value="{{ reserva.data_saida }}" required>
                 </label>
-                <div class="hospedes__toolbar">
-                    <button type="submit" class="hospedes__button hospedes__button--primary">Atualizar reserva</button>
-                    <a class="hospedes__button" href="/reservas">Cancelar</a>
+                <div class="inline-actions">
+                    <button type="submit" class="button button-primary">Atualizar reserva</button>
+                    <a class="button" href="/reservas">Cancelar</a>
                 </div>
             </form>
         </section>

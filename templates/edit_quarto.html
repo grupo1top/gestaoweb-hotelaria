@@ -6,63 +6,33 @@
     <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
     <script defer src="{{ url_for('static', path='js/script.js') }}"></script>
     <title>Hotelaria | Editar quarto</title>
-
 </head>
-<body class="dashboard-page">
-     <div class="navbar">
-        <a href="/hospede">HÓSPEDES</a>
-       <a href="/quartos">QUARTOS</a>
-       <a href="/reservas">RESERVAS</a>
-    </div>
-    <main class="dashboard-shell">
-        <section class="panel dashboard-hero" data-reveal>
-            <div class="dashboard-hero__copy">
-                <p class="dashboard-kicker">Edição</p>
-                <h1 class="dashboard-title">Atualização cadastral de quartos</h1>
-                <p class="dashboard-subtitle">Revise o número, o tipo, o valor da diária e o status antes de salvar.</p>
-            </div>
-            <div class="dashboard-hero__chips" aria-label="Ações rápidas">
-                <a class="dashboard-chip" href="/quartos">Voltar para quartos</a>
-                <a class="dashboard-chip" href="/">Dashboard</a>
-            </div>
-        </section>
+<body>
+    <a class="site-logo" href="/" aria-label="Ir para a página inicial">
+        <img src="{{ url_for('static', path='img/logo.png') }}" alt="Logo da hotelaria">
+    </a>
+    <nav class="site-nav" aria-label="Navegação principal">
+        <a href="/">Home</a>
+        <a href="/hospede">Hóspedes</a>
+        <a href="/quartos">Quartos</a>
+        <a href="/reservas">Reservas</a>
+    </nav>
 
-        <section class="metrics-grid" aria-label="Resumo da edição">
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Quarto</span>
-                <strong class="metric-card__value">{{ quartos.id }}</strong>
-            </article>
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Número</span>
-                <strong class="metric-card__value">{{ quartos.numero }}</strong>
-            </article>
-            <article class="metric-card metric-card--accent" data-reveal>
-                <span class="metric-card__label">Status</span>
-                <strong class="metric-card__value">{{ quartos.status }}</strong>
-            </article>
-            <article class="metric-card" data-reveal>
-                <span class="metric-card__label">Tipo</span>
-                <strong class="metric-card__value">{{ quartos.tipo }}</strong>
-            </article>
-        </section>
+    <main class="page-shell">
+        <header class="page-header">
+            <p class="eyebrow">Edição</p>
+            <h1 class="page-title">Atualização cadastral de quartos</h1>
+            <p class="page-subtitle">Revise o número, o tipo, o valor da diária e o status antes de salvar.</p>
+        </header>
 
-        <section class="panel dashboard-actions" aria-labelledby="edit-quarto-title" data-reveal>
-            <div class="section-heading">
-                <div>
-                    <p class="section-heading__eyebrow">Formulário</p>
-                    <h2 id="edit-quarto-title">Editar quarto</h2>
-                </div>
-                <p class="section-heading__subtitle">Os campos abaixo já vêm preenchidos com os dados atuais.</p>
-            </div>
-
+        <section class="form-panel">
             <form action="/edit_quarto/{{ quartos.id }}" method="POST">
                 <label>
-                    <span class="hint">Número do quarto</span>
+                    <span>Número do quarto</span>
                     <input type="text" name="numero" placeholder="Número" value="{{ quartos.numero }}" required>
                 </label>
-
                 <label>
-                    <span class="hint">Tipo de quarto</span>
+                    <span>Tipo de quarto</span>
                     <select name="tipo" required>
                         <option value="" {% if not quartos.tipo %}selected{% endif %}>Selecione um tipo</option>
                         <option value="Solteiro" {% if quartos.tipo == 'Solteiro' %}selected{% endif %}>Solteiro</option>
@@ -72,23 +42,20 @@
                         <option value="Família" {% if quartos.tipo == 'Família' %}selected{% endif %}>Família</option>
                     </select>
                 </label>
-
                 <label>
-                    <span class="hint">Valor da diária</span>
+                    <span>Valor da diária</span>
                     <input type="text" name="valor_diaria" placeholder="Valor diária" value="{{ quartos.valor_diaria }}" required>
                 </label>
-
                 <label>
-                    <span class="hint">Status</span>
+                    <span>Status</span>
                     <select name="status" required>
                         <option value="DISPONÍVEL" {% if quartos.status == 'DISPONÍVEL' %}selected{% endif %}>Disponível</option>
                         <option value="OCUPADO" {% if quartos.status == 'OCUPADO' %}selected{% endif %}>Ocupado</option>
                     </select>
                 </label>
-
-                <div class="hospedes__toolbar">
-                    <button type="submit" class="hospedes__button hospedes__button--primary">Atualizar cadastro</button>
-                    <a class="hospedes__button" href="/quartos">Cancelar</a>
+                <div class="inline-actions">
+                    <button type="submit" class="button button-primary">Atualizar cadastro</button>
+                    <a class="button" href="/quartos">Cancelar</a>
                 </div>
             </form>
         </section>

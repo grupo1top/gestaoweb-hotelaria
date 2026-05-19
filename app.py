@@ -8,6 +8,7 @@ from fastapi import Form
 from fastapi.responses import RedirectResponse
 from typing import Annotated
 from fastapi.staticfiles import StaticFiles
+from mysql.connector.errors import IntegrityError # para tratamento de erros no banco de dados 
 
 from model import *
 
@@ -19,7 +20,7 @@ templates = Jinja2Templates(directory="templates")
 
 
 
-#listagem de alunos
+
 # Página inicial que mostra o painel de controle
 
 @app.get("/")
@@ -35,7 +36,7 @@ async def consultar_hospede(request:Request):
         },
     )
 
-#visualizar alunos
+
 # Lista todos os hóspedes cadastrados
 
 @app.get("/hospede")
@@ -47,7 +48,6 @@ async def consultar_hospede(request:Request):
    
    
 
-#cadastrar aluno
 # Exibe o formulário para incluir um novo hóspede
 
 @app.get("/add_hospede")
@@ -72,7 +72,7 @@ async def cadastrar_hospede(
 
     return RedirectResponse("/hospede", status_code=303)  
 
-#edição de alunos
+
 # Exibe o formulário de edição de um hóspede pelo id
 
 @app.get("/edit_hospede/{id}")
@@ -98,7 +98,7 @@ async def editar_hospede(
     update_hospede(id, nome, email, telefone, cpf)
     return RedirectResponse("/hospede", status_code=303)
 
-#exclusão de alunos 
+
 # Mostra os dados para confirmar a exclusão
 
 @app.get("/delete_hospede/{id}")
@@ -113,11 +113,20 @@ async def deletar_hospede(request: Request, id:int):
 
 
 @app.post("/delete_hospede/{id}")
-async def deletar_hospede(id: int):
-
-    delete_hospede(id)
-
-    return RedirectResponse("/hospede", status_code=303)
+async def deletar_hospede(request: Request, id: int):
+    try: # tenta adicionar um hóspede 
+        delete_hospede(id)
+        return RedirectResponse("/hospede", status_code=303)
+    except IntegrityError: # em caso de erro exibe uma mensagem informando o possível erro vindo do banco de dados s
+        return templates.TemplateResponse(
+            request=request,
+            name="hospedes.html",
+            context={
+                "context": consulta_hospedes(),
+                "error_message": "Não é possível remover um hóspede que possuí uma reserva cadastrada.", # mensagem de erro 
+            },
+            status_code=400,
+        )
    
 
 @app.get("/quartos")
@@ -150,8 +159,8 @@ async def adicionar_quarto(
     add_quarto(numero, tipo, valor_diaria, status)
 
     return RedirectResponse("/quartos", status_code=303)  
-#edição de alunos
 
+# exibe formulário de edição de quarto 
 @app.get("/edit_quarto/{id}")
 async def editar_quarto(request:Request, id:int):
 
@@ -177,7 +186,7 @@ async def editar_quarto(
 
     return RedirectResponse("/quartos", status_code=303)  
 
-#exclusão de alunos 
+# exclui um quarto
 
 @app.get("/delete_quarto/{id}")
 async def deletar_quarto(request: Request, id:int):
@@ -189,7 +198,7 @@ async def deletar_quarto(request: Request, id:int):
     name="quartos.html", 
     context={"quarto": quarto}) 
 
-#listagem de cursos
+
 
 @app.post("/delete_quarto/{id}")
 async def deletar_quarto(id: int):
@@ -198,7 +207,8 @@ async def deletar_quarto(id: int):
 
     return RedirectResponse("/quartos", status_code=303)  
 
-
+#visualizar reservas
+# Lista todas as reservas e mostra a página de detalhes
 
 @app.get("/reservas")
 async def consultar_reserva(request:Request):
@@ -207,9 +217,8 @@ async def consultar_reserva(request:Request):
     name="reservas.html", 
     context={"context":consulta_reservas()}) 
 
-#visualizar reservas
-# Lista todas as reservas e mostra a página de detalhes
 
+# busca reserva pelo id do hospede 
 @app.get("/reservas/{id}")
 async def consultar_reserva(request:Request, id:int):
     return templates.TemplateResponse(
@@ -217,8 +226,8 @@ async def consultar_reserva(request:Request, id:int):
     name="view_reserva.html", 
     context={"context":view_reserva(id), "hospede_id": id}) 
 
-#cadastrar aluno
 
+# formulario para adicionar uma reserva 
 @app.get("/add_reserva")
 async def adicionar_reserva(request: Request):
     return templates.TemplateResponse(
@@ -239,8 +248,8 @@ async def adicionar_reserva(
     add_reserva(id_hospede, id_quarto, data_entrada, data_saida)
 
     return RedirectResponse("/reservas", status_code=303)  
-#edição de alunos
 
+# formulario de edição de reserva 
 @app.get("/edit_reserva/{id}")
 async def editar_hospede(request:Request, id:int):
 
@@ -265,16 +274,9 @@ async def editar_reserva(
     update_reserva(id, id_hospede, id_quarto, data_entrada, data_saida)
 
     return RedirectResponse("/reservas", status_code=303)  
-#exclusão de alunos 
 
-@app.get("/delete_reserva/{id}")
-async def deletar_reserva(request: Request):
-    return templates.TemplateResponse(
-    request=request, 
-    name="delete_reserva.html", 
-    context={"context":delete_reserva()}) 
+# exclui uma reserva 
 
-#listagem de cursos
 
 @app.post("/delete_reserva/{id}")
 async def deletar_reserva(id:int):
