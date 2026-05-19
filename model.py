@@ -273,3 +273,18 @@ def delete_reserva(id_user):
 
     conn.commit()
     conn.close()
+
+def view_reserva(id_user):
+
+    conn - connection()
+    cursor = conn.cursor()  
+
+    cursor.execute(
+
+
+    )
+
+    conn.commit()
+    conn.close()
+
+    
