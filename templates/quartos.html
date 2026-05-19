@@ -10,7 +10,53 @@
 </head>
 
 <body>
-    
+    <div class="navbar">
+        <a href="/home">HOME</a>
+        <a href="/hospede">HÓSPEDES</a>
+        <a href="/quartos">QUARTOS</a>
+        <a href="/reservas">RESERVAS</a>
+    </div>
+
+    <main class="container">
+        <div class="header-section">
+            <h1>Gestão de Quartos</h1>
+            <a href="/add_quarto" class="btn-add">+ Adicionar Quarto</a>
+        </div>
+        
+        {% if context %}
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Tipo</th>
+                        <th>Valor da Diária</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for quarto in context %}
+                    <tr>
+                        <td>{{ quarto.numero }}</td>
+                        <td>{{ quarto.tipo }}</td>
+                        <td>R$ {{ "%.2f"|format(quarto.valor_diaria) }}</td>
+                        <td><span class="status-badge {{ quarto.status|lower }}">{{ quarto.status }}</span></td>
+                        <td>
+                            <a href="/edit_quarto/{{ quarto.id }}" class="btn-action edit">Editar</a>
+                            <a href="/delete_quarto/{{ quarto.id }}" class="btn-action delete" onclick="return confirm('Deseja excluir?')">Excluir</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <p>Nenhum quarto cadastrado.</p>
+                <a href="/add_quarto" class="btn-add">Adicionar primeiro quarto</a>
+            </div>
+        {% endif %}
+    </main>
+
 </body>
 
 </html>

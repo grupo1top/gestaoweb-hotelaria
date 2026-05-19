@@ -6,16 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/style.css">
 
-    <title>HOTELARIA</title>
+    <title>HOTELARIA - Dashboard</title>
 
 </head>
 
 <body>
     <div class="navbar">
-        <a href="hospedes.html">HOSPEDES</a>
-       <a href="quartos.html">QUARTOS</a>
-       <a href="reservas.html">RESERVAS</a>
+        <a href="/home">HOME</a>
+        <a href="/hospede">HÓSPEDES</a>
+        <a href="/quartos">QUARTOS</a>
+        <a href="/reservas">RESERVAS</a>
     </div>
+
+    <main class="dashboard">
+        <section class="dashboard-header">
+            <h1>Dashboard do Sistema</h1>
+            <p>Resumo geral da gestão de hotelaria</p>
+        </section>
+
+        <section class="dashboard-cards">
+            <div class="card-dashboard">
+                <span>Total de Hóspedes</span>
+                <strong>{{ tabela1|length }}</strong>
+            </div>
+
+            <div class="card-dashboard">
+                <span>Total de Quartos</span>
+                <strong>{{ tabela2|length }}</strong>
+            </div>
+
+            <div class="card-dashboard">
+                <span>Reservas Ativas</span>
+                <strong>{{ tabela3|length }}</strong>
+            </div>
+        </section>
+
+        <section class="menu-navegacao">
+            <h2>Menu de Navegação</h2>
+            <div class="menu-links">
+                <a href="/hospede">Gerenciar Hóspedes</a>
+                <a href="/quartos">Gerenciar Quartos</a>
+                <a href="/reservas">Gerenciar Reservas</a>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
+    </main>
 </body>
 
 </html>

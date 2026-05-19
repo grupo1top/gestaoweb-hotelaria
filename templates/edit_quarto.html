@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,52 @@
     <title>HOTELARIA - EDITAR QUARTO</title>
 
 </head>
+
 <body>
-    
+    <div class="navbar">
+       <a href="/home">HOME</a>
+        <a href="/hospede">HÓSPEDES</a>
+        <a href="/quartos">QUARTOS</a>
+        <a href="/reservas">RESERVAS</a>
+    </div>
+
+    <main class="container">
+        <div class="form-header">
+            <h1>Editar Quarto</h1>
+            <a href="/quartos" class="btn-back">← Voltar</a>
+        </div>
+
+        <form method="POST" action="/edit_quarto/1" class="form">
+            <div class="form-group">
+                <label for="numero">Número:</label>
+                <input type="text" id="numero" name="numero" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tipo">Tipo:</label>
+                <input type="text" id="tipo" name="tipo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="valor_diaria">Valor da Diária:</label>
+                <input type="number" id="valor_diaria" name="valor_diaria" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="DISPONÍVEL">DISPONÍVEL</option>
+                    <option value="OCUPADO">OCUPADO</option>
+                    <option value="MANUTENÇÃO">MANUTENÇÃO</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-save">Atualizar</button>
+                <a href="/quartos" class="btn-cancel">Cancelar</a>
+            </div>
+        </form>
+    </main>
 </body>
+
 </html>

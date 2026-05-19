@@ -10,11 +10,52 @@
 </head>
 
 <body>
-    <div class="hero-hospedes">
-        <a href="index.html">HOME</a>
-        <a href="add_hospede.html">ADICIONAR HOSPEDE</a>
-        <a href="edit_hospede.html">EDITAR HOSPEDE</a>
+    <div class="navbar">
+        <a href="/home">HOME</a>
+        <a href="/hospede">HÓSPEDES</a>
+        <a href="/quartos">QUARTOS</a>
+        <a href="/reservas">RESERVAS</a>
     </div>
+
+    <main class="container">
+        <div class="header-section">
+            <h1>Gestão de Hóspedes</h1>
+            <a href="/add_hospede" class="btn-add">+ Adicionar Hóspede</a>
+        </div>
+        
+        {% if context %}
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>Email</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for hospede in context %}
+                    <tr>
+                        <td>{{ hospede.nome }}</td>
+                        <td>{{ hospede.cpf }}</td>
+                        <td>{{ hospede.telefone }}</td>
+                        <td>{{ hospede.email }}</td>
+                        <td>
+                            <a href="/edit_hospede/{{ hospede.id }}" class="btn-action edit">Editar</a>
+                            <a href="/delete_hospede/{{ hospede.id }}" class="btn-action delete" onclick="return confirm('Deseja excluir?')">Excluir</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <p>Nenhum hóspede cadastrado.</p>
+                <a href="/add_hospede" class="btn-add">Adicionar primeiro hóspede</a>
+            </div>
+        {% endif %}
+    </main>
 
 </body>
 

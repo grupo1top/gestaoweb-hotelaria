@@ -1,13 +1,94 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/style.css">
-    <title>HOTELARIA - VISUALIZAR RESERVA</title>
+    <title>HOTELARIA - DETALHES DA RESERVA</title>
 
 </head>
+
 <body>
-    
+    <div class="navbar">
+        <a href="/home">HOME</a>
+        <a href="/hospede">HÓSPEDES</a>
+        <a href="/quartos">QUARTOS</a>
+        <a href="/reservas">RESERVAS</a>
+    </div>
+
+    <main class="container">
+        <div class="form-header">
+            <h1>Detalhes da Reserva</h1>
+            <a href="/reservas" class="btn-back">← Voltar</a>
+        </div>
+
+        <div class="details-card">
+            <h2>Informações da Reserva</h2>
+            
+            <div class="details-section">
+                <h3>Hóspede</h3>
+                <div class="detail-row">
+                    <span class="label">Nome:</span>
+                    <span class="value">{{ context.hospede_nome if context else '-' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">CPF:</span>
+                    <span class="value">{{ context.hospede_cpf if context else '-' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Telefone:</span>
+                    <span class="value">{{ context.hospede_telefone if context else '-' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Email:</span>
+                    <span class="value">{{ context.hospede_email if context else '-' }}</span>
+                </div>
+            </div>
+
+            <div class="details-section">
+                <h3>Quarto</h3>
+                <div class="detail-row">
+                    <span class="label">Número:</span>
+                    <span class="value">{{ context.quarto_numero if context else '-' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Tipo:</span>
+                    <span class="value">{{ context.quarto_tipo if context else '-' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Valor da Diária:</span>
+                    <span class="value">R$ {{ "%.2f"|format(context.quarto_valor_diaria) if context else '-' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Status:</span>
+                    <span class="value"><span class="status-badge {{ context.quarto_status|lower if context else '' }}">{{ context.quarto_status if context else '-' }}</span></span>
+                </div>
+            </div>
+
+            <div class="details-section">
+                <h3>Datas da Hospedagem</h3>
+                <div class="detail-row">
+                    <span class="label">Check-in:</span>
+                    <span class="value">{{ context.data_entrada if context else '-' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Check-out:</span>
+                    <span class="value">{{ context.data_saida if context else '-' }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Valor Estimado:</span>
+                    <span class="value highlight">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="/edit_reserva/{{ context.id if context else '1' }}" class="btn-save">Editar</a>
+                <a href="/delete_reserva/{{ context.id if context else '1' }}" class="btn-delete" onclick="return confirm('Deseja excluir?')">Excluir</a>
+                <a href="/reservas" class="btn-cancel">Voltar</a>
+            </div>
+        </div>
+    </main>
 </body>
+
 </html>
