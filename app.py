@@ -1,3 +1,5 @@
+# app.py: rotas e páginas da aplicação usando FastAPI
+# Importa o que é necessário do FastAPI e do módulo de dados
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -10,12 +12,15 @@ from fastapi.staticfiles import StaticFiles
 from model import *
 
 app = FastAPI()
+# Serve arquivos na pasta static em /static
 app.mount("/static", StaticFiles(directory="static"), name="static")
+# Configura o diretório dos templates HTML
 templates = Jinja2Templates(directory="templates")
 
 
 
 #listagem de alunos
+# Página inicial que mostra o painel de controle
 
 @app.get("/")
 async def consultar_hospede(request:Request): 
@@ -31,6 +36,7 @@ async def consultar_hospede(request:Request):
     )
 
 #visualizar alunos
+# Lista todos os hóspedes cadastrados
 
 @app.get("/hospede")
 async def consultar_hospede(request:Request):
@@ -42,6 +48,7 @@ async def consultar_hospede(request:Request):
    
 
 #cadastrar aluno
+# Exibe o formulário para incluir um novo hóspede
 
 @app.get("/add_hospede")
 async def cadastrar_hospede(request:Request):
@@ -66,6 +73,7 @@ async def cadastrar_hospede(
     return RedirectResponse("/hospede", status_code=303)  
 
 #edição de alunos
+# Exibe o formulário de edição de um hóspede pelo id
 
 @app.get("/edit_hospede/{id}")
 async def editar_hospede(request:Request, id:int):
@@ -91,6 +99,7 @@ async def editar_hospede(
     return RedirectResponse("/hospede", status_code=303)
 
 #exclusão de alunos 
+# Mostra os dados para confirmar a exclusão
 
 @app.get("/delete_hospede/{id}")
 async def deletar_hospede(request: Request, id:int):
@@ -118,7 +127,8 @@ async def consultar_quartos(request:Request):
     name="quartos.html", 
     context={"context":consulta_quartos()}) 
 
-#cadastrar aluno
+#cadastrar quarto
+# Exibe o formulário para inserir um novo quarto
 
 @app.get("/add_quarto")
 async def adicionar_quarto(request: Request):
@@ -196,6 +206,9 @@ async def consultar_reserva(request:Request):
     request=request, 
     name="reservas.html", 
     context={"context":consulta_reservas()}) 
+
+#visualizar reservas
+# Lista todas as reservas e mostra a página de detalhes
 
 @app.get("/reservas/{id}")
 async def consultar_reserva(request:Request, id:int):
