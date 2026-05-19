@@ -224,21 +224,21 @@ def consulta_reserva_id(id_user):
         (id_user,) 
     )
         
-    dados = cursor.fetchall() # pega os registros retornados pela query
+    dados = cursor.fetchone() # pega os registros retornados pela query
     conn.close()
 
     return dados
     
 
-def add_reserva(hospede_id, quarto_id, data_entrada, data_saida):
+def add_reserva(id_hospede, id_quarto, data_entrada, data_saida):
     conn = connection()
     cursor = conn.cursor()
 
     query = '''
-            insert into alunos (numero, tipo, valor_diaria, status) values (%s, %s, %s, %s)
+            insert into reservas (hospede_id, quarto_id, data_entrada, data_saida) values (%s, %s, %s, %s)
             '''
     
-    cursor.execute(query , (hospede_id, quarto_id, data_entrada, data_saida))
+    cursor.execute(query , (id_hospede, id_quarto, data_entrada, data_saida))
 
     conn.commit()
     conn.close()

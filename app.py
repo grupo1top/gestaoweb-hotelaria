@@ -181,7 +181,7 @@ async def deletar_quarto(request: Request, id:int):
     return templates.TemplateResponse(
     request=request, 
     name="quartos.html", 
-    context={"quartos": quarto}) 
+    context={"quarto": quarto}) 
 
 #listagem de cursos
 
@@ -215,25 +215,47 @@ async def adicionar_reserva(request: Request):
     return templates.TemplateResponse(
     request=request, 
     name="add_reserva.html", 
-    context={"context":add_reserva()}) 
+    )
 
 @app.post("/add_reserva")
-async def adicionar_reserva():
-    return add_reserva()
+async def adicionar_reserva(
+    request: Request,
 
+    id_hospede: str = Form(...),
+    id_quarto: str = Form(...),
+    data_entrada: str = Form(...),
+    data_saida: str = Form(...)
+
+):
+    add_reserva(id_hospede, id_quarto, data_entrada, data_saida)
+
+    return RedirectResponse("/reservas", status_code=303)  
 #edição de alunos
 
 @app.get("/edit_reserva/{id}")
-async def editar_hospede(request:Request):
+async def editar_hospede(request:Request, id:int):
+
+    reserva = consulta_reserva_id(id)
+
     return templates.TemplateResponse(
     request=request, 
     name="edit_reserva.html", 
-    context={"context":update_reserva()}) 
+    context={"reserva": reserva}) 
 
 @app.post("/edit_reserva/{id}")
-async def editar_reserva():
-    return update_reserva()
+async def editar_reserva(
+    request: Request,
 
+    id: int,
+    id_hospede: str = Form(...),
+    id_quarto: str = Form(...),
+    data_entrada: str = Form(...),
+    data_saida: str = Form(...)
+
+):
+    update_reserva(id, id_hospede, id_quarto, data_entrada, data_saida)
+
+    return RedirectResponse("/reservas", status_code=303)  
 #exclusão de alunos 
 
 @app.get("/delete_reserva/{id}")
@@ -246,5 +268,7 @@ async def deletar_reserva(request: Request):
 #listagem de cursos
 
 @app.post("/delete_reserva/{id}")
-async def deletar_reserva():
-   return delete_reserva()
+async def deletar_reserva(id:int):
+    delete_reserva(id)
+
+    return RedirectResponse("/reservas", status_code=303)  
