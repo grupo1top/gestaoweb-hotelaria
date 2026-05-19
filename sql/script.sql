@@ -94,8 +94,25 @@ FROM reservas r
 INNER JOIN hospedes h ON r.hospede_id = h.id
 INNER JOIN quartos q ON r.quarto_id = q.id;
 
+-- cria a view do dashboard com os totais básicos do sistema
+CREATE VIEW view_dashboard AS
+SELECT
+    -- quantidade de hóspedes
+    (SELECT COUNT(*) FROM hospedes) AS total_hospedes,
+    -- quantidade de quartos
+    (SELECT COUNT(*) FROM quartos) AS total_quartos,
+    -- reservas ativas
+    (SELECT COUNT(*) FROM reservas
+        WHERE DATEDIFF(data_saida, CURDATE()) >= 0
+          AND DATEDIFF(CURDATE(), data_entrada) >= 0) AS total_reservas_ativas,
+    -- rendimentos
+    (SELECT COALESCE(SUM(DATEDIFF(r.data_saida, r.data_entrada) * q.valor_diaria), 0)
+        FROM reservas r
+        INNER JOIN quartos q ON r.quarto_id = q.id) AS total_rendimentos;
+
 -- consultas avulsas apenas para testes
 SELECT * FROM hospedes;
 SELECT * FROM quartos;
 SELECT * FROM reservas;
 SELECT * FROM view_reservas;
+SELECT * FROM view_dashboard;

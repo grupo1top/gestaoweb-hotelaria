@@ -300,3 +300,24 @@ def view_reserva(id_user):
 
     return dados
 
+def dashboard_index():
+    conn = connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute(
+        '''
+        SELECT *
+        FROM view_dashboard
+        '''
+    )
+    dados = cursor.fetchone() or {
+        "total_hospedes": 0,
+        "total_quartos": 0,
+        "total_reservas_ativas": 0,
+        "total_rendimentos": 0,
+    }
+
+    conn.close()
+
+    return dados
+

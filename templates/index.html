@@ -11,11 +11,40 @@
 </head>
 
 <body>
-    <div class="navbar">
-        <a href="/hospede">HOSPEDES</a>
-       <a href="/quartos">QUARTOS</a>
-       <a href="/reservas">RESERVAS</a>
-    </div>
+    <header class="dashboard-header">
+        <div>
+            <p class="dashboard-header__eyebrow">Gestão da hotelaria</p>
+            <h1 class="dashboard-header__title">Dashboard do sistema</h1>
+            <p class="dashboard-header__subtitle">Acompanhe os principais números e navegue pelas áreas do sistema.</p>
+        </div>
+        <nav class="navbar dashboard-nav">
+            <a href="/">DASHBOARD</a>
+            <a href="/hospede">HÓSPEDES</a>
+            <a href="/quartos">QUARTOS</a>
+            <a href="/reservas">RESERVAS</a>
+        </nav>
+    </header>
+
+    <main class="dashboard">
+        <section class="dashboard__cards">
+            <article class="dashboard-card">
+                <span class="dashboard-card__label">Quantidade de hóspedes</span>
+                <strong class="dashboard-card__value">{{ dashboard.total_hospedes }}</strong>
+            </article>
+            <article class="dashboard-card">
+                <span class="dashboard-card__label">Quantidade de quartos</span>
+                <strong class="dashboard-card__value">{{ dashboard.total_quartos }}</strong>
+            </article>
+            <article class="dashboard-card dashboard-card--accent">
+                <span class="dashboard-card__label">Reservas ativas</span>
+                <strong class="dashboard-card__value">{{ dashboard.total_reservas_ativas }}</strong>
+            </article>
+            <article class="dashboard-card">
+                <span class="dashboard-card__label">Rendimentos</span>
+                <strong class="dashboard-card__value">{{ dashboard.total_rendimentos }}</strong>
+            </article>
+        </section>
+    </main>
 </body>
 
 </html>
