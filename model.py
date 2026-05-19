@@ -16,13 +16,7 @@ def consulta_hospedes():
 
     dados = cursor.fetchall() # pega os registros retornados pela query
     conn.close()
-
-    resposta = {} # cria um novo dicionário que salva as informações encontradas
-
-    for item in dados:
-        resposta[f"{len(resposta)+1}"] = item["nome"]
-
-    return resposta
+    return dados 
 
 def consulta_hospede_id(id_user):
     conn = connection()
@@ -37,22 +31,17 @@ def consulta_hospede_id(id_user):
         (id_user,) 
     )
         
-    dados = cursor.fetchall() # pega os registros retornados pela query
+    dados = cursor.fetchone() # pega os registros retornados pela query
     conn.close()
+    return dados
 
-    resposta = {} # cria um novo dicionário que salva as informações encontradas
-
-    for item in dados:
-        resposta[f"{len(resposta)+1}"] = item["nome"]
-
-    return resposta
 
 def add_hospede(nome, email, telefone, cpf):
     conn = connection()
     cursor = conn.cursor()
 
     query = '''
-            insert into hospedes (nome, email, telefone, cpf) values (%s)
+            insert into hospedes (nome, email, telefone, cpf) values (%s, %s, %s, %s)
             '''
     
     cursor.execute(query , (nome,email, telefone, cpf))
@@ -128,13 +117,8 @@ def consulta_quartos():
 
     dados = cursor.fetchall() # pega os registros retornados pela query
     conn.close()
+    return dados
 
-    resposta = {} # cria um novo dicionário que salva as informações encontradas
-
-    for item in dados:
-        resposta[f"{len(resposta)+1}"] = item["nome"]
-
-    return resposta
 
 def consulta_quartos_id(id_user):
     conn = connection()
@@ -149,22 +133,18 @@ def consulta_quartos_id(id_user):
         (id_user,) 
     )
         
-    dados = cursor.fetchall() # pega os registros retornados pela query
+    dados = cursor.fetchone() # pega os registros retornados pela query
     conn.close()
+    return dados
 
-    resposta = {} # cria um novo dicionário que salva as informações encontradas
 
-    for item in dados:
-        resposta[f"{len(resposta)+1}"] = item["numero"]
-
-    return resposta
 
 def add_quarto(numero, tipo, valor_diaria, status):
     conn = connection()
     cursor = conn.cursor()
 
     query = '''
-            insert into alunos (numero, tipo, valor_diaria, status) values (%s)
+            insert into quartos (numero, tipo, valor_diaria, status) values (%s, %s, %s, %s)
             '''
     
     cursor.execute(query , (numero, tipo, valor_diaria, status))
@@ -211,22 +191,25 @@ def consulta_reservas():
     cursor.execute(
 
         '''
-            SELECT *
-                FROM 
-            reservas
+        SELECT 
+            reservas.id,
+            hospedes.nome AS nome_hospede,
+            quartos.numero AS numero_quarto,
+            reservas.data_entrada,
+            reservas.data_saida
+        FROM reservas
+        JOIN hospedes 
+            ON reservas.hospede_id = hospedes.id
+        JOIN quartos 
+            ON reservas.quarto_id = quartos.id;
         '''
 
     )
 
     dados = cursor.fetchall() # pega os registros retornados pela query
     conn.close()
+    return dados
 
-    resposta = {} # cria um novo dicionário que salva as informações encontradas
-
-    for item in dados:
-        resposta[f"{len(resposta)+1}"] = item["id"]
-
-    return resposta
 
 def consulta_reserva_id(id_user):
     conn = connection()
@@ -244,19 +227,15 @@ def consulta_reserva_id(id_user):
     dados = cursor.fetchall() # pega os registros retornados pela query
     conn.close()
 
-    resposta = {} # cria um novo dicionário que salva as informações encontradas
-
-    for item in dados:
-        resposta[f"{len(resposta)+1}"] = item["nome"]
-
-    return resposta
+    return dados
+    
 
 def add_reserva(hospede_id, quarto_id, data_entrada, data_saida):
     conn = connection()
     cursor = conn.cursor()
 
     query = '''
-            insert into alunos (numero, tipo, valor_diaria, status) values (%s)
+            insert into alunos (numero, tipo, valor_diaria, status) values (%s, %s, %s, %s)
             '''
     
     cursor.execute(query , (hospede_id, quarto_id, data_entrada, data_saida))

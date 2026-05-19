@@ -10,9 +10,20 @@
 </head>
 
 <body>
-    <div class="home">
-        <a href="index.html">HOME</a>
+    <div class="navbar">
+        <a href="/hospedes">HÓSPEDES</a>
+       <a href="/quartos">QUARTOS</a>
+       <a href="/reservas">RESERVAS</a>
     </div>
+    <h1>Editar informações do hóspede</h1>
+    <p>insira os dados atualizados do hóspede cadastrado </p>
+    <form action="/edit_hospede/{{ hospede.id }}" method="POST">
+         <input type="text" name="nome" placeholder="Nome completo ">
+        <input type="email" name="email" placeholder="email">
+        <input type="text" name="telefone" placeholder="telefone ">
+        <input type="text" name="cpf" placeholder="somente números">
+        <button type="submit">Editar hóspede</button>
+    </form>
 </body>
 
 </html>

@@ -8,6 +8,56 @@
 
 </head>
 <body>
-    
+      <div class="navbar">
+          <a href="/hospede">HÓSPEDES</a>
+         <a href="/quartos">QUARTOS</a>
+         <a href="/reservas">RESERVAS</a>
+     </div>
+
+    <main class="hospedes">
+        <header class="hospedes__header">
+            <div>
+                <h1 class="hospedes__title">Lista de reservas</h1>
+                <p class="hospedes__subtitle">Visualize as reservas e use as ações para editar ou excluir.</p>
+            </div>
+            <div class="hospedes__toolbar">
+                <a class="hospedes__button hospedes__button--primary" href="/add_reserva">Adicionar nova reserva</a>
+                <a class="hospedes__button" href="/">Home</a>
+            </div>
+        </header>
+
+        <section class="hospedes__table-wrapper">
+            <table class="hospedes__table">
+                <thead class="hospedes__head">
+                    <tr class="hospedes__row">
+                        <th class="hospedes__head-cell">ID</th>
+                        <th class="hospedes__head-cell">Hóspede</th>
+                        <th class="hospedes__head-cell">Quarto</th>
+                        <th class="hospedes__head-cell">Data entrada</th>
+                        <th class="hospedes__head-cell">Data saída</th>
+                        <th class="hospedes__head-cell">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="hospedes__body">
+                    {% for reserva in context %}
+                        <tr class="hospedes__row">
+                            <td class="hospedes__cell">{{ reserva.id }}</td>
+                            <td class="hospedes__cell">{{ reserva.nome_hospede }}</td>
+                            <td class="hospedes__cell">{{ reserva.numero_quarto }}</td>
+                            <td class="hospedes__cell">{{ reserva.data_entrada }}</td>
+                            <td class="hospedes__cell">{{ reserva.data_saida }}</td>
+                            <td class="hospedes__cell">
+                                <div class="hospedes__actions">
+                                    <a class="hospedes__action hospedes__action--edit" href="/edit_reserva/{{ reserva.id }}">Editar</a>
+                                    <a class="hospedes__action hospedes__action--delete" href="/delete_reserva/{{ reserva.id }}">Excluir</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+
 </body>
 </html>

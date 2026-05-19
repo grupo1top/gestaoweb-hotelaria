@@ -8,6 +8,24 @@
 
 </head>
 <body>
-    
+     <div class="navbar">
+        <a href="hospedes.html">HÓSPEDES</a>
+       <a href="quartos.html">QUARTOS</a>
+       <a href="reservas.html">RESERVAS</a>
+    </div>
+    <body>
+         <h1>Cadastro de Reservas</h1>
+    <form action="/add_quarto" method="POST">
+         <h4>ID hóspede titular</h4>
+        <input type="text" placeholder="ID hóspede">
+        <h4>ID do quarto reservado</h4>
+        <input type="text" placeholder="ID quarto">
+        <h4>Data entrada</h4>
+        <input type="date">
+        <h4>Data saída</h4>
+        <input type="date">
+        <button type="submit">Atualizar reserva</button>
+
+    </form>
 </body>
 </html>

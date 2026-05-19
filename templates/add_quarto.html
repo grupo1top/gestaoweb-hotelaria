@@ -8,6 +8,52 @@
 
 </head>
 <body>
-    
+     <div class="navbar">
+        <a href="hospedes.html">HÓSPEDES</a>
+       <a href="quartos.html">QUARTOS</a>
+       <a href="reservas.html">RESERVAS</a>
+    </div>
+    <h1>Cadastro de quarto</h1>
+    <form action="/add_quarto" method="POST">
+         <h4>Número do quarto</h4>
+        <input type="text" name="numero" placeholder="Número ">
+        <h4>Tipo de quarto</h4>
+
+         <select name="tipo">
+              <option value="">Selecione um tipo</option>
+
+        <option value="Solteiro">
+            Solteiro
+        </option>
+
+        <option value="Casal">
+            Casal
+        </option>
+
+        <option value="Luxo">
+            Luxo
+        </option>
+
+        <option value="Suíte Master">
+            Suíte Master
+        </option>
+
+        <option value="Família">
+            Família
+        </option>
+
+        </select>
+
+        <h4>Valor da diária</h4>
+        <input type="text" name="valor_diaria" placeholder="Valor Diária">
+        <h4>Satus</h4>
+
+        <select name="status">
+            <option value="DISPONÍVEL">DISPONÍVEL</option>
+            <option value="OCUPADO">OCUPADO</option>
+        </select>
+        <button type="submit">Adicionar quarto</button>
+
+    </form>
 </body>
 </html>

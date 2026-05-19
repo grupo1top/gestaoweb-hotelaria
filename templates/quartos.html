@@ -10,7 +10,59 @@
 </head>
 
 <body>
-    
+      <div class="navbar">
+          <a href="/hospede">HÓSPEDES</a>
+         <a href="/quartos">QUARTOS</a>
+         <a href="/reservas">RESERVAS</a>
+     </div>
+
+    <main class="hospedes">
+        <header class="hospedes__header">
+            <div>
+                <h1 class="hospedes__title">Lista de quartos</h1>
+                <p class="hospedes__subtitle">Visualize os quartos e use as ações para editar ou excluir.</p>
+            </div>
+            <div class="hospedes__toolbar">
+                <a class="hospedes__button hospedes__button--primary" href="/add_quarto">Adicionar novo quarto</a>
+                <a class="hospedes__button" href="/">Home</a>
+            </div>
+        </header>
+
+        <section class="hospedes__table-wrapper">
+            <table class="hospedes__table">
+                <thead class="hospedes__head">
+                    <tr class="hospedes__row">
+                        <th class="hospedes__head-cell">ID</th>
+                        <th class="hospedes__head-cell">Número</th>
+                        <th class="hospedes__head-cell">Tipo</th>
+                        <th class="hospedes__head-cell">Valor diária</th>
+                        <th class="hospedes__head-cell">Status</th>
+                        <th class="hospedes__head-cell">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="hospedes__body">
+                    {% for quarto in context %}
+                        <tr class="hospedes__row">
+                            <td class="hospedes__cell">{{ quarto.id }}</td>
+                            <td class="hospedes__cell">{{ quarto.numero }}</td>
+                            <td class="hospedes__cell">{{ quarto.tipo }}</td>
+                            <td class="hospedes__cell">{{ quarto.valor_diaria }}</td>
+                            <td class="hospedes__cell">{{ quarto.status }}</td>
+                            <td class="hospedes__cell">
+                                <div class="hospedes__actions">
+                                    <a class="hospedes__action hospedes__action--edit" href="/edit_quarto/{{ quarto.id }}">Editar</a>
+                                    <form action="/delete_quarto/{{ quartos.id }}" method="POST">
+                                    <button class="hospedes__action hospedes__action--delete"
+                                        type="submit"> Excluir</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
 </body>
 
 </html>

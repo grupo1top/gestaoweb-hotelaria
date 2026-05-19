@@ -10,9 +10,9 @@
 
 <body>
     <div class="navbar">
-        <a href="hospedes.html">HOSPEDES</a>
-        <a href="quartos.html">QUARTOS</a>
-        <a href="reservas.html">RESERVAS</a>
+        <a href="/hospede">HÓSPEDES</a>
+        <a href="/quartos">QUARTOS</a>
+        <a href="/reservas">RESERVAS</a>
     </div>
     <main class="hospedes">
         <header class="hospedes__header">
@@ -22,7 +22,7 @@
             </div>
             <div class="hospedes__toolbar">
                 <a class="hospedes__button hospedes__button--primary" href="/add_hospede">Adicionar novo hóspede</a>
-                <a class="hospedes__button" href="index.html">Home</a>
+                <a class="hospedes__button" href="/">Home</a>
             </div>
         </header>
 
@@ -30,6 +30,7 @@
             <table class="hospedes__table">
                 <thead class="hospedes__head">
                     <tr class="hospedes__row">
+                        <th class="hospedes__head-cell">ID</th>
                         <th class="hospedes__head-cell">Nome</th>
                         <th class="hospedes__head-cell">CPF</th>
                         <th class="hospedes__head-cell">Telefone</th>
@@ -38,51 +39,25 @@
                     </tr>
                 </thead>
                 <tbody class="hospedes__body">
-                    {% if context is defined and context.items is defined %}
-                        {% for hospede_id, hospede in context.items() %}
-                            {% if hospede is mapping %}
-                                {% set hospede_item = hospede %}
-                            {% else %}
-                                {% set hospede_item = {'nome': hospede, 'cpf': '—', 'telefone': '—', 'email': '—'} %}
-                            {% endif %}
-                            <tr class="hospedes__row">
-                                <td class="hospedes__cell">{{ hospede_item.nome }}</td>
-                                <td class="hospedes__cell">{{ hospede_item.cpf or '—' }}</td>
-                                <td class="hospedes__cell">{{ hospede_item.telefone or '—' }}</td>
-                                <td class="hospedes__cell">{{ hospede_item.email or '—' }}</td>
-                                <td class="hospedes__cell">
-                                    <div class="hospedes__actions">
-                                        <a class="hospedes__action hospedes__action--edit" href="/edit_hospede/{{ hospede_id }}">Editar</a>
-                                        <a class="hospedes__action hospedes__action--delete" href="/delete_hospede/{{ hospede_id }}">Excluir</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    {% elif context is defined %}
-                        {% for hospede in context %}
-                            {% if hospede is mapping %}
-                                {% set hospede_item = hospede %}
-                            {% else %}
-                                {% set hospede_item = {'nome': hospede, 'cpf': '—', 'telefone': '—', 'email': '—'} %}
-                            {% endif %}
-                            <tr class="hospedes__row">
-                                <td class="hospedes__cell">{{ hospede_item.nome }}</td>
-                                <td class="hospedes__cell">{{ hospede_item.cpf or '—' }}</td>
-                                <td class="hospedes__cell">{{ hospede_item.telefone or '—' }}</td>
-                                <td class="hospedes__cell">{{ hospede_item.email or '—' }}</td>
-                                <td class="hospedes__cell">
-                                    <div class="hospedes__actions">
-                                        <a class="hospedes__action hospedes__action--edit" href="/edit_hospede/{{ hospede_item.id or '' }}">Editar</a>
-                                        <a class="hospedes__action hospedes__action--delete" href="/delete_hospede/{{ hospede_item.id or '' }}">Excluir</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    {% else %}
+                    {% for hospede in context %}
                         <tr class="hospedes__row">
-                            <td class="hospedes__cell hospedes__no-data" colspan="5">Nenhum hóspede encontrado.</td>
+                            <td class="hospedes__cell">{{ hospede.id}}</td>
+                            <td class="hospedes__cell">{{ hospede.nome}}</td>
+                            <td class="hospedes__cell">{{ hospede.cpf}}</td>
+                            <td class="hospedes__cell">{{ hospede.telefone}}</td>
+                            <td class="hospedes__cell">{{ hospede.email}}</td>
+                            <td class="hospedes__cell">
+                                <div class="hospedes__actions">
+                                    <a class="hospedes__action hospedes__action--edit" href="/edit_hospede/{{ hospede.id }}">Editar</a>
+                                    <form action="/delete_hospede/{{ hospede.id }}" method="POST">
+                                    <button class="hospedes__action hospedes__action--delete"
+                                        type="submit"> Excluir</button>
+
+                                </form>
+                                </div>
+                            </td>
                         </tr>
-                    {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
         </section>
