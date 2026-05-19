@@ -20,19 +20,15 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/")
 async def consultar_hospede(request:Request): 
 
-    consulta = consulta_hospedes()
-    quartos = consulta_quartos()
-    reservas = consulta_reservas()
+    dashboard = dashboard_index()
 
     return templates.TemplateResponse(
-    request=request, 
-    name="index.html", 
-    context={
-
-       "tabela1": consulta,
-       "tabela2": quartos,
-       "tabela3": reservas
-    }) 
+        request=request,
+        name="index.html",
+        context={
+            "dashboard": dashboard,
+        },
+    )
 
 #visualizar alunos
 
@@ -202,11 +198,11 @@ async def consultar_reserva(request:Request):
     context={"context":consulta_reservas()}) 
 
 @app.get("/reservas/{id}")
-async def consultar_reserva(request:Request):
+async def consultar_reserva(request:Request, id:int):
     return templates.TemplateResponse(
     request=request, 
-    name="reservas.html", 
-    context={"context":consulta_reserva_id()}) 
+    name="view_reserva.html", 
+    context={"context":view_reserva(id), "hospede_id": id}) 
 
 #cadastrar aluno
 
