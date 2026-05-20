@@ -278,6 +278,10 @@ def view_reserva(id_user):
     conn = connection()
     cursor = conn.cursor(dictionary=True)
 
+    
+    # segue a lógica do script.sql
+    # A view já faz os joins necessários entre reservas, hospedes e quartos; aqui filtramos apenas
+    # pelo hospede_id passado e ordenamos por data_entrada decrescente.
     cursor.execute(
         '''
         SELECT 
