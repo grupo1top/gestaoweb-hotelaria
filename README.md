@@ -15,6 +15,16 @@ O projeto utiliza:
 - **HTML, CSS e JavaScript** para a camada de interface
 - **MVC (Model, View, Controller)** para organizar a aplicação em camadas
 
+## 🖼️ Imagens do Projeto
+
+### Logo
+
+![Logo do projeto](static/img/logo.png)
+
+### Modelo do script do banco
+
+![Modelo do script do banco](sql/modelo_script_hotelaria.png)
+
 ### Arquitetura MVC
 
 A aplicação segue a arquitetura **MVC** para manter o código mais limpo e fácil de manter:
